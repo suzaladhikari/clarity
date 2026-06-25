@@ -59,3 +59,9 @@ def company_datasets(symbol):
     return data
 for key,value in watchlist.items():
     company_datasets(key)
+
+
+### Market tracking 
+market = {'SPY': 'S & P 500'}
+for key in market.keys():
+    company_datasets(key)
