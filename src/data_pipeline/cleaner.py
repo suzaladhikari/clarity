@@ -13,6 +13,7 @@ def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan
         print(f"There is no such file for the symbol {symbol}")
         return None ## Returning none
     data = pd.read_parquet(filepath) ## Reading the paraquet
+    data = data.sort_values(by = 'date')
     data = data.loc[:, ~data.columns.str.contains('Unnamed')] ### removing the unnamed column
     data['date'] = pd.to_datetime(data['date']) ## Converting the date to pd.datetime format
     if data.isna().sum().sum() > 0: ## Checking the nan values
@@ -21,7 +22,6 @@ def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan
     if data.duplicated(subset=['date']).sum() > 0: ## If there are duplicates 
         data = data.drop_duplicates(subset=['date']) ## Dropping htem 
         print(f"There are duplicate values for stock {symbol}. Fixed using duplication drop")
-    data = data.sort_values(by = 'date')
     data.to_parquet(savingname, index = False) ## Converting them back to parquet and stroing them in the processed 
     return data
 

@@ -34,4 +34,8 @@ def feature_creation(data):
     data['volume_zscore'] = (data['adjVolume'] - volume_mean) / volume_std
     data['vol_lag_1'] = data['rolling_vol_20'].shift(1)
 
+    ### Linkage with S and P 500 
+    data['excess_return'] = data['log_return'] - data['sp5_log_return']
+    data['vol_ratio'] = data['rolling_vol_20'] / data['sp5_20_volatility']
+
     return data.dropna()
