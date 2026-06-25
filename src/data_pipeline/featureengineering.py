@@ -21,8 +21,9 @@ def feature_creation(data):
 
     ## Volume shock 
     volume_mean = data['adjVolume'].rolling(20).mean()
-    volume_std = data['adjVolume'].rolling(20).mean()
+    volume_std = data['adjVolume'].rolling(20).std()
 
     data['volume_zscore'] = (data['volume'] - volume_mean) / volume_std
+    data['vol_lag_1'] = data['rolling_vol_20'].shift(1)
 
     return data.dropna()
