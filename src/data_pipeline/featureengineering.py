@@ -13,6 +13,7 @@ def feature_creation(data):
 
 # Calculating the rolling volatitlity 
     data['rolling_vol_5'] = data['log_return'].rolling(5).std()
+    data['rolling_vol_10'] = data['log_return'].rolling(10).std()
     data['rolling_vol_30'] = data['log_return'].rolling(30).std()
 
 # Calculating the daily range volatilitiy 
