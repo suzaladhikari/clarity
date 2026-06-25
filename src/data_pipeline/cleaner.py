@@ -2,7 +2,7 @@
 import os 
 import pandas as pd 
 import numpy as np 
-from ingest import watchlist
+from ingest import watchlist, market
 
 def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan data types
     path = os.path.join("datas", "raw")
@@ -18,8 +18,8 @@ def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan
     if data.isna().sum().sum() > 0: ## Checking the nan values
         print(f"Missing Values Detected for symbol {symbol}, Fixed using forward fill")
         data = data.ffill() ## Doing forward fill for all the missing values 
-    if data.duplicated(subset=['Date']).sum() > 0: ## If there are duplicates 
-        data = data.drop_duplicates(subset=['Date']) ## Dropping htem 
+    if data.duplicated(subset=['date']).sum() > 0: ## If there are duplicates 
+        data = data.drop_duplicates(subset=['date']) ## Dropping htem 
         print(f"There are duplicate values for stock {symbol}. Fixed using duplication drop")
     data = data.sort_values(by = 'date')
     data.to_parquet(savingname, index = False) ## Converting them back to parquet and stroing them in the processed 
@@ -27,4 +27,7 @@ def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan
 
 
 for key in watchlist.keys():
+    data_corrector(key)
+
+for key in market.keys():
     data_corrector(key)

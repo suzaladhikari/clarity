@@ -4,6 +4,9 @@ import numpy as np
 
 ### Here we will be creating new features 
 
+### S & P 500 
+sp5 = pd.read_parquet('/Users/sujaladhikari/sujalpersonal/Projects/Clarity/datas/processed/SPY.parquet')
+
 def feature_creation(data):
     ## Creating the log return 
     data['log_return'] = np.log(data['adjClose'] / data['adjClose'].shift(1)) ## Log returns 
