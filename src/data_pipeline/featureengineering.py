@@ -6,6 +6,9 @@ import numpy as np
 
 ### S & P 500 
 sp5 = pd.read_parquet('/Users/sujaladhikari/sujalpersonal/Projects/Clarity/datas/processed/SPY.parquet')
+sp5['sp5_log_return'] = np.log(sp5['adjClose'] / sp5['adjClose'].shift(1))
+sp5['log_volatility'] = sp5['sp5_log_return'].rolling(20).std()
+sp5['sp5_abs_return'] = np.abs(sp5['sp5_log_return'])
 
 def feature_creation(data):
     ## Creating the log return 
