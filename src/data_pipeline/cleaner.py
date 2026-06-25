@@ -1,0 +1,29 @@
+## Handling all the missing values 
+import os 
+import pandas as pd 
+import numpy as np 
+from ingest import watchlist
+
+def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan data types
+    path = '/datas/raw/'
+    filepath = f'{path}{symbol}.parquet' ### Accessing each file 
+    saving_path = '/datas/processed/'
+    savingname = f'{saving_path}{symbol}.parquet'
+    if not os.path.exists(filepath): ## If there is no such file
+        print(f"There is no such file for the symbol {symbol}")
+        return None ## Returning none
+    data = pd.read_parquet(filepath) ## Reading the paraquet
+    data = data.loc[:, ~data.columns.str.contains('Unnamed')] ### removing the unnamed column
+    data['date'] = pd.to_datetime(data['date']) ## Converting the date to pd.datetime format
+    if data.isna().sum().sum() > 0: ## Checking the nan values
+        print(f"Missing Values Detected for symbol {symbol}, Fixed using forward fill")
+        data = data.ffill() ## Doing forward fill for all the missing values 
+    if data.duplicated().sum() > 0: ## If there are duplicates 
+        data = data.drop_duplicates() ## Dropping htem 
+        print(f"There are duplicate values for stock {symbol}. Fixed using duplication drop")
+    data.to_parquet(savingname, index = False) ## Converting them back to parquet and stroing them in the processed 
+    return data
+
+
+for key in watchlist.keys():
+    print(key)
