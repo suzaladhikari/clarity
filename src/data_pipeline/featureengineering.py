@@ -9,8 +9,11 @@ def feature_creation(data):
     data['return'] = data['adjClose'].pct_change() ## this gives the return 
     data['log_return'] = np.log(data['adjClose'] / data['adjClose'].shift(1)) ## Log returns 
     data['squred_log_returns'] = data['log_return'] ** 2
+    data['abs_log_returns'] = np.abs(data['log_return'])
 
 # Calculating the rolling volatitlity 
     data['rolling_vol_5'] = data['log_return'].rolling(5).std()
     data['rolling_vol_30'] = data['log_return'].rolling(30).std()
-    
+
+# Calculating the daily range volatilitiy 
+    data['daily_range'] = (data['adjHigh'] - data['adjLow'])/data['adjClose'] ## Calculating intraday changes/turbulence.
