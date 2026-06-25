@@ -22,7 +22,6 @@ def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan
         data = data.drop_duplicates() ## Dropping htem 
         print(f"There are duplicate values for stock {symbol}. Fixed using duplication drop")
     data.to_parquet(savingname, index = False) ## Converting them back to parquet and stroing them in the processed 
-    print(f"[OK] Processed {symbol}")
     return data
 
 
