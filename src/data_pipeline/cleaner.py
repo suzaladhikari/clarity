@@ -5,10 +5,10 @@ import numpy as np
 from ingest import watchlist
 
 def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan data types
-    path = '/datas/raw/'
-    filepath = f'{path}{symbol}.parquet' ### Accessing each file 
-    saving_path = '/datas/processed/'
-    savingname = f'{saving_path}{symbol}.parquet'
+    path = os.path.join("datas", "raw")
+    saving_path = os.path.join("datas", "processed")
+    filepath = os.path.join(path, f"{symbol}.parquet")
+    savingname = os.path.join(saving_path, f"{symbol}.parquet")
     if not os.path.exists(filepath): ## If there is no such file
         print(f"There is no such file for the symbol {symbol}")
         return None ## Returning none
@@ -22,8 +22,9 @@ def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan
         data = data.drop_duplicates() ## Dropping htem 
         print(f"There are duplicate values for stock {symbol}. Fixed using duplication drop")
     data.to_parquet(savingname, index = False) ## Converting them back to parquet and stroing them in the processed 
+    print(f"[OK] Processed {symbol}")
     return data
 
 
 for key in watchlist.keys():
-    print(key)
+    data_corrector(key)
