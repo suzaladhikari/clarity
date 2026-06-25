@@ -7,11 +7,13 @@ import numpy as np
 ### S & P 500 
 sp5 = pd.read_parquet('/Users/sujaladhikari/sujalpersonal/Projects/Clarity/datas/processed/SPY.parquet')
 sp5['sp5_log_return'] = np.log(sp5['adjClose'] / sp5['adjClose'].shift(1))
-sp5['log_volatility'] = sp5['sp5_log_return'].rolling(20).std()
+sp5['sp5_20_volatility'] = sp5['sp5_log_return'].rolling(20).std()
 sp5['sp5_abs_return'] = np.abs(sp5['sp5_log_return'])
+sp5 = sp5.sort_index()
 
 def feature_creation(data):
     ## Creating the log return 
+    data = data.merge(sp5[['sp5_log_return', 'sp5_20_volatility', 'sp5_abs_return']], left_on = 'date', right_index = True, how= 'left')
     data['log_return'] = np.log(data['adjClose'] / data['adjClose'].shift(1)) ## Log returns 
     data['squared_log_returns'] = data['log_return'] ** 2
     data['abs_log_returns'] = np.abs(data['log_return'])
