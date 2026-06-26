@@ -10,7 +10,6 @@ combined_data = []
 for filename in os.listdir(combined_directory):
     clean_name = filename.strip().strip("'").strip('"')
     if clean_name.endswith('.parquet'):
-        print(repr(filename))
         file_path = os.path.join(combined_directory, filename)
         data = pd.read_parquet(file_path)
         combined_data.append(data)
