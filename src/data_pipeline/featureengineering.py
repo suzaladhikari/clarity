@@ -42,7 +42,8 @@ def feature_creation(data):
     ## Label: next day volatility 
     data['target_volatility'] = data['rolling_vol_20'].shift(-1)
 
-    return data.dropna()
+    data = data.dropna(subset=['log_return','rolling_vol_20','sp5_log_return','target_volatility'])
+    return data
 
 
 
