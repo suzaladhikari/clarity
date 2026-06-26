@@ -43,7 +43,7 @@ def feature_creation(data):
 for key in watchlist.keys():
     filepath = os.path.join("datas", "processed")
     filename = os.path.join(filepath, f"{key}.parquet")
-    savingpath = os.path.join("datas", "features")
+    savingpath = os.path.join("datas", "features", f"{key}.parquet")
     data = pd.read_parquet(filename)
     processed_data = feature_creation(data)
     processed_data.to_parquet(savingpath, index=False)
