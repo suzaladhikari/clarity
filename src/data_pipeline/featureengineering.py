@@ -39,8 +39,14 @@ def feature_creation(data):
     ### Linkage with S and P 500 
     data['excess_return'] = data['log_return'] - data['sp5_log_return']
     data['vol_ratio'] = data['rolling_vol_20'] / data['sp5_20_volatility']
+    ## Label: next day volatility 
+    data['target_volatility'] = data['rolling_vol_20'].shift(-1)
 
     return data.dropna()
+
+
+
+
 
 for key in watchlist.keys():
     filepath = os.path.join("datas", "processed")
