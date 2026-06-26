@@ -1,7 +1,7 @@
 import pandas as pd
 import os 
 import numpy as np
-
+from ingest import watchlist
 ### Here we will be creating new features 
 
 ### S & P 500 
@@ -39,3 +39,12 @@ def feature_creation(data):
     data['vol_ratio'] = data['rolling_vol_20'] / data['sp5_20_volatility']
 
     return data.dropna()
+
+for key in watchlist.keys():
+    filepath = os.path.join("datas", "processed")
+    filename = os.path.join(filepath, f"{key}.parquet")
+    savingpath = os.path.join("datas", "features")
+    data = pd.read_parquet(filename)
+    processed_data = feature_creation(data)
+    processed_data.to_parquet(savingpath, index=False)
+
