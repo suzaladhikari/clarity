@@ -16,3 +16,10 @@ for filename in os.listdir(combined_directory):
     
 combined_stock_data = pd.concat(combined_data, ignore_index=True)
 print(combined_stock_data.shape[0])
+
+
+## Doing the train, validation and test split with the date
+train_split = combined_stock_data[combined_stock_data['date'] < '2020-01-01']
+validation_split = combined_stock_data[(combined_stock_data['date'] >= '2020-01-01' ) & (combined_stock_data['date'] < '2022-01-01')]
+test_split = combined_stock_data[combined_stock_data['date'] >= '2022-01-01']
+print(train_split.shape, validation_split.shape, test_split.shape)
