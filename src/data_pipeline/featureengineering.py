@@ -6,7 +6,7 @@ from ingest import watchlist
 
 ### S & P 500 
 sp5 = pd.read_parquet('/Users/sujaladhikari/sujalpersonal/Projects/Clarity/datas/processed/SPY.parquet')
-sp5.index = pd.to_datetime(sp5.index).tz_localize(None)
+sp5['date'] = pd.to_datetime(sp5['date']).dt.tz_localize(None)
 sp5['sp5_log_return'] = np.log(sp5['adjClose'] / sp5['adjClose'].shift(1))
 sp5['sp5_20_volatility'] = sp5['sp5_log_return'].rolling(20).std()
 sp5['sp5_abs_return'] = np.abs(sp5['sp5_log_return'])
@@ -15,7 +15,7 @@ sp5 = sp5.sort_index()
 def feature_creation(data):
     ## Creating the log return 
     data['date'] = pd.to_datetime(data['date']).dt.tz_localize(None)
-    data = data.merge(sp5[['date','sp5_log_return', 'sp5_20_volatility', 'sp5_abs_return']], left_on = 'date', right_index = True, how= 'left')
+    data = data.merge(sp5[['date','sp5_log_return', 'sp5_20_volatility', 'sp5_abs_return']], left_on = 'date', right_on = 'date', how= 'left')
     data['log_return'] = np.log(data['adjClose'] / data['adjClose'].shift(1)) ## Log returns 
     data['squared_log_returns'] = data['log_return'] ** 2
     data['abs_log_returns'] = np.abs(data['log_return'])
