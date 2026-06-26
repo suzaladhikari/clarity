@@ -15,7 +15,7 @@ sp5 = sp5.sort_index()
 def feature_creation(data):
     ## Creating the log return 
     data['date'] = pd.to_datetime(data['date']).dt.tz_localize(None)
-    data = data.merge(sp5[['sp5_log_return', 'sp5_20_volatility', 'sp5_abs_return']], left_on = 'date', right_index = True, how= 'left')
+    data = data.merge(sp5[['date','sp5_log_return', 'sp5_20_volatility', 'sp5_abs_return']], left_on = 'date', right_index = True, how= 'left')
     data['log_return'] = np.log(data['adjClose'] / data['adjClose'].shift(1)) ## Log returns 
     data['squared_log_returns'] = data['log_return'] ** 2
     data['abs_log_returns'] = np.abs(data['log_return'])
@@ -42,7 +42,6 @@ def feature_creation(data):
     ## Label: next day volatility 
     data['target_volatility'] = data['rolling_vol_20'].shift(-1)
 
-    data = data.dropna(subset=['log_return','rolling_vol_20','sp5_log_return','target_volatility'])
     return data
 
 
