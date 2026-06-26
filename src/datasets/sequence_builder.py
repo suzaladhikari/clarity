@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np 
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 import os 
 ## Creating a combined datset 
 
@@ -23,3 +24,12 @@ train_split = combined_stock_data[combined_stock_data['date'] < '2020-01-01']
 validation_split = combined_stock_data[(combined_stock_data['date'] >= '2020-01-01' ) & (combined_stock_data['date'] < '2022-01-01')]
 test_split = combined_stock_data[combined_stock_data['date'] >= '2022-01-01']
 print(train_split.shape, validation_split.shape, test_split.shape)
+
+## Scaling the features
+columns_to_drop = ['close', 'high', 'low', 'open', 'volume', 'adjClose', 'adjHigh','adjLow', 'adjOpen', 'adjVolume', 'divCash', 'splitFactor',]
+combined_stock_data = combined_stock_data.drop(columns = columns_to_drop)
+scaler = StandardScaler()
+scalable_columns = combined_stock_data.drop(columns = ['date', 'Symbol', 'target_volatility']).columns
+train_split[scalable_columns] = scaler.fit_transform(train_split[scalable_columns])
+validation_split[scalable_columns] = scaler.transform(train_split[scalable_columns])
+test_split[scalable_columns] = scaler.transform(train_split[scalable_columns])
