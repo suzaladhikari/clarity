@@ -46,10 +46,10 @@ def creating_sequences(data, scalable_columns, target_col = 'target_volatility',
         features = stock[scalable_columns].values
         target = stock[target_col].values
         for i in range(window, len(stock)): ## This creates the slide window like 0-30, 1-31, 2-32
-            X.append(features[i-window:window]) ## This appends the features
+            X.append(features[i-window:i]) ## This appends the features
             y.append(target[i]) ## This appends the target for the 30+i days 
     
     return np.array(X), np.array(y)
 
-X, y = creating_sequences(data, scalable_columns)
-print(X.shape)
+## The shape of X is : (4586,30,16) ## So there are  4586 samples, 30 window, and 16 features 
+## Similarly y is (4586, ) meaning only 4586 values 
