@@ -16,7 +16,6 @@ for filename in os.listdir(combined_directory):
         combined_data.append(data)
     
 combined_stock_data = pd.concat(combined_data, ignore_index=True)
-print(combined_stock_data.shape[0])
 
 ## Dropping the unnecessary columns 
 columns_to_drop = ['close', 'high', 'low', 'open', 'volume', 'adjClose', 'adjHigh','adjLow', 'adjOpen', 'adjVolume', 'divCash', 'splitFactor',]
@@ -26,7 +25,6 @@ combined_stock_data = combined_stock_data.drop(columns = columns_to_drop)
 train_split = combined_stock_data[combined_stock_data['date'] < '2020-01-01'].copy()
 validation_split = combined_stock_data[(combined_stock_data['date'] >= '2020-01-01' ) & (combined_stock_data['date'] < '2022-01-01')].copy()
 test_split = combined_stock_data[combined_stock_data['date'] >= '2022-01-01'].copy()
-print(train_split.shape, validation_split.shape, test_split.shape)
 
 ## Scaling the features
 
@@ -53,3 +51,7 @@ def creating_sequences(data, scalable_columns, target_col = 'target_volatility',
 
 ## The shape of X is : (4586,30,16) ## So there are  4586 samples, 30 window, and 16 features 
 ## Similarly y is (4586, ) meaning only 4586 values 
+X_train, y_train = creating_sequences(train_split, scalable_columns)
+X_val, y_val = creating_sequences(validation_split, scalable_columns)
+X_test, y_test = creating_sequences(test_split, scalable_columns)
+
