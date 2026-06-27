@@ -35,3 +35,18 @@ scalable_columns = combined_stock_data.drop(columns = ['date', 'Symbol', 'target
 train_split[scalable_columns] = scaler.fit_transform(train_split[scalable_columns])
 validation_split[scalable_columns] = scaler.transform(validation_split[scalable_columns])
 test_split[scalable_columns] = scaler.transform(test_split[scalable_columns])
+
+
+## Creating Sequences 
+def creating_sequences(data, scalable_columns, target_col = 'target_volatility', window = 30):
+    X,y = [], []
+    ### For each stock 
+    for symbol in data['Symbol'].unique():
+        stock = data[data['Symbol'] == symbol].sort_values('date')
+        features = stock[scalable_columns].values
+        target = stock[target_col].values
+        for i in range(window, len(stock)): ## This creates the slide window like 0-30, 1-31, 2-32
+            X.append(features[i-window]) ## This appends the features
+            y.append(target[i]) ## This appends the target for the 30+i days 
+    
+    return np.array(X), np.array(y)
