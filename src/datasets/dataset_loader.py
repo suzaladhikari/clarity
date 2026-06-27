@@ -12,3 +12,5 @@ y_val = torch.FloatTensor(y_val)
 X_test = torch.FloatTensor(X_test)
 y_test = torch.FloatTensor(y_test)
 
+### Creating the tensor dataset
+train_dataset = TensorDataset(X_train, y_train)
