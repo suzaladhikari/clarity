@@ -42,11 +42,14 @@ def creating_sequences(data, scalable_columns, target_col = 'target_volatility',
     X,y = [], []
     ### For each stock 
     for symbol in data['Symbol'].unique():
-        stock = data[data['Symbol'] == symbol].sort_values('date')
+        stock = data[data['Symbol'] == symbol].sort_values('date') ## Sorting values by date 
         features = stock[scalable_columns].values
         target = stock[target_col].values
         for i in range(window, len(stock)): ## This creates the slide window like 0-30, 1-31, 2-32
-            X.append(features[i-window]) ## This appends the features
+            X.append(features[i-window:window]) ## This appends the features
             y.append(target[i]) ## This appends the target for the 30+i days 
     
     return np.array(X), np.array(y)
+
+X, y = creating_sequences(data, scalable_columns)
+print(X.shape)
