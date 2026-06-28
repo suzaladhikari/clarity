@@ -16,3 +16,23 @@ def fetch_news(ticker, start_date, end_date, api_key):
     }
     response = requests.get(url, params= params)
     return response.json()
+
+def score_headline(headline, threshold = 0.70):
+    result = sentiment_pipeline(headline[:512])[0]
+    label = result['label']
+    score = result['score']
+
+    if score < threshold: 
+        return 0.0 
+    
+    if label == 'positive':
+        return score 
+    
+    elif label == 'negative':
+        return -score
+    
+    else:
+        return 0.0
+    
+
+
