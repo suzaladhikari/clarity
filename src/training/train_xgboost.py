@@ -33,3 +33,18 @@ X_test = test_split[scalable_columns]
 y_test = test_split[TARGET]
 
 ## Loading data is done ! 
+
+default_params = {
+    'n_estimators': 500,        
+    'max_depth': 4,             
+    'learning_rate': 0.01,      
+    'subsample': 0.8,
+    'colsample_bytree': 0.7,
+    'min_child_weight': 5,      
+    'gamma': 0.1,               
+    'objective': 'reg:squarederror',
+    'random_state': 42,
+    'n_jobs': -1
+}
+
+model = build_xgboost_model(default_params) # Built the XGBoost Regressor with the given data 
