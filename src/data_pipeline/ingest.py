@@ -5,6 +5,7 @@ import os
 import time
 import requests
 import glob
+from transformers import pipeline, BertTokenizer, BertForSequenceClassification
 
 # for f in glob.glob('../updatedtop20datasets/*'):
 #     os.remove(f)
@@ -65,3 +66,6 @@ for key,value in watchlist.items():
 market = {'SPY': 'S & P 500'}
 for key in market.keys():
     company_datasets(key)
+
+## Sentiment analysis from the FinBERT 
+
