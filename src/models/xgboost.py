@@ -1,7 +1,7 @@
 import xgboost as xgb
 
 
-def build_xgboost_model(params = None, early_stopping_rounds = 50):
+def build_xgboost_model(params = None):
     default_params = {
         'n_estimators': 200, 
         'max_depth': 6, 
@@ -15,4 +15,4 @@ def build_xgboost_model(params = None, early_stopping_rounds = 50):
     if params:
         default_params.update(params)
     
-    return xgb.XGBRegressor(**default_params, early_stopping_rounds = early_stopping_rounds)
+    return xgb.XGBRegressor(**default_params)
