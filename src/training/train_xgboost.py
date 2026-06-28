@@ -6,12 +6,9 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import classification_report, precision_score, recall_score, confusion_matrix, recall_score, accuracy_score, ConfusionMatrixDisplay,f1_score, roc_auc_score
 from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
+from src.datasets.sequence_builder import train_split, test_split, validation_split
 
-data = pd.read_parquet('./datas/features/combined_data.parquet')
 
 # Train,test and evaluation split
 
-train_split = data[data['date'] < '2020-01-01'].copy()
-validation_split = data[(data['date'] >= '2020-01-01' ) & (data['date'] < '2022-01-01')].copy()
-test_split = data[data['date'] >= '2022-01-01'].copy()
-
+print(train_split.shape[0], test_split.shape[0], validation_split.shape[0])
