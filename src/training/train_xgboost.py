@@ -9,7 +9,6 @@ from sklearn.preprocessing import StandardScaler
 
 
 combined_stock_data = pd.read_parquet('./datas/features/combined_data.parquet')
-
 ## Doing the train, validation and test split with the date
 train_split = combined_stock_data[combined_stock_data['date'] < '2020-01-01'].copy()
 validation_split = combined_stock_data[(combined_stock_data['date'] >= '2020-01-01' ) & (combined_stock_data['date'] < '2022-01-01')].copy()
@@ -23,4 +22,11 @@ train_split[scalable_columns] = scaler.fit_transform(train_split[scalable_column
 validation_split[scalable_columns] = scaler.transform(validation_split[scalable_columns])
 test_split[scalable_columns] = scaler.transform(test_split[scalable_columns])
 
-print(train_split.columns)
+X_train = train_split.iloc[:, :-1]  
+y_train = train_split.iloc[:, -1]
+
+X_val = validation_split.iloc[:, :-1]
+y_val = validation_split.iloc[:, -1]
+
+X_test = test_split.iloc[:, :-1]
+y_test = test_split.iloc[:, -1]
