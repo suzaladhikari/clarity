@@ -4,11 +4,23 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 from src.models.xgboost import build_xgboost_model
 import pandas as pd
 import numpy as np
-from sklearn.metrics import classification_report, precision_score, recall_score, confusion_matrix, recall_score, accuracy_score, ConfusionMatrixDisplay,f1_score, roc_auc_score
 from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
-from src.datasets.sequence_builder import train_split, test_split, validation_split
+from sklearn.preprocessing import StandardScaler
 
 
-# Train,test and evaluation split
+combined_stock_data = pd.read_parquet('./datas/features/combined_data.parquet')
 
-print(train_split.shape[0], test_split.shape[0], validation_split.shape[0])
+## Doing the train, validation and test split with the date
+train_split = combined_stock_data[combined_stock_data['date'] < '2020-01-01'].copy()
+validation_split = combined_stock_data[(combined_stock_data['date'] >= '2020-01-01' ) & (combined_stock_data['date'] < '2022-01-01')].copy()
+test_split = combined_stock_data[combined_stock_data['date'] >= '2022-01-01'].copy()
+
+## Scaling the features
+
+scaler = StandardScaler()
+scalable_columns = combined_stock_data.drop(columns = ['date', 'Symbol', 'target_volatility']).columns
+train_split[scalable_columns] = scaler.fit_transform(train_split[scalable_columns])
+validation_split[scalable_columns] = scaler.transform(validation_split[scalable_columns])
+test_split[scalable_columns] = scaler.transform(test_split[scalable_columns])
+
+print(train_split.columns)

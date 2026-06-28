@@ -18,12 +18,12 @@ for filename in os.listdir(combined_directory):
     
 combined_stock_data = pd.concat(combined_data, ignore_index=True)
 os.makedirs('./datas/features', exist_ok=True)
-combined_stock_data.to_parquet('./datas/features/combined_data.parquet' , index = False)
+
 
 ## Dropping the unnecessary columns 
 columns_to_drop = ['close', 'high', 'low', 'open', 'volume', 'adjClose', 'adjHigh','adjLow', 'adjOpen', 'adjVolume', 'divCash', 'splitFactor',]
 combined_stock_data = combined_stock_data.drop(columns = columns_to_drop)
-
+combined_stock_data.to_parquet('./datas/features/combined_data.parquet' , index = False)
 ## Doing the train, validation and test split with the date
 train_split = combined_stock_data[combined_stock_data['date'] < '2020-01-01'].copy()
 validation_split = combined_stock_data[(combined_stock_data['date'] >= '2020-01-01' ) & (combined_stock_data['date'] < '2022-01-01')].copy()
