@@ -8,7 +8,7 @@ tokenizer = BertTokenizer.from_pretrained("ProsusAI/finbert") ## Used to tokeniz
 model = BertForSequenceClassification.from_pretrained("ProsusAI/finbert") ## For classification of the tokens
 sentiment_pipeline = pipeline("sentiment-analysis", model = model, tokenizer = tokenizer) ## Pipeline to do the process
 
-def fetch_news(ticker, start_date, end_date, api_key):
+def fetch_news(ticker, start_date, api_key):
     url = "https://api.tiingo.com/tiingo/news"
     params = {
         "tickers":ticker,
