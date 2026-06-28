@@ -1,5 +1,5 @@
 import xgboost as xgb
-import pickle
+import os 
 
 def build_xgboost_model(params = None):
     default_params = {
@@ -9,7 +9,7 @@ def build_xgboost_model(params = None):
         'subsample':0.8, ## prevents overfitting
         'colsample_bytree':0.8, ## feature subsampling 
         'objective':'reg:squarederror', ## used for regression 
-        'randomstate':42, ## Setting up the random seed
+        'random_state':42, ## Setting up the random seed
         'n_jobs': -1  ## Using all the cores
     }
     if params:
@@ -18,7 +18,8 @@ def build_xgboost_model(params = None):
     return xgb.XGBRegressor(**default_params)
 
 
-def saving_model(model):
-    saving_path = '/models_saved/xgboost'
-    with open(saving_path, 'wb') as f:
-        pickle.dump(model, f)
+def saving_model(model, saving_directory = 'models_saved/xgboost', filename= 'xgboost_model.json'):
+    os.makedirs(saving_directory, exist_ok=True)
+    saving_path = os.path.join(saving_directory, filename)
+    model.save_model(saving_path)
+
