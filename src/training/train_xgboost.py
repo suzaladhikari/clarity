@@ -47,4 +47,6 @@ default_params = {
     'n_jobs': -1
 }
 
-model = build_xgboost_model(default_params) # Built the XGBoost Regressor with the given data 
+model = build_xgboost_model(default_params) # Built the XGBoost Regressor with the given parameters
+model.fit(X_train,y_train, eval_set = [(X_val, y_val)], early_stopping_rounds = 50, verbose = 100)
+
