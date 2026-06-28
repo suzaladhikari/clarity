@@ -1,7 +1,7 @@
 import sys 
 import os 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
-from src.models.xgboost import build_xgboost_model
+from src.models.xgboost import build_xgboost_model, saving_model
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
@@ -52,3 +52,7 @@ y_pred, rmse, mae,r2 = evaluate_model(model, X_test, y_test)
 print(f"RMSE SCORE: ", rmse)
 print(f"MAE SCORE", mae)
 print(f"R2-score", r2)
+
+
+## Saving the model 
+saving_model(model)
