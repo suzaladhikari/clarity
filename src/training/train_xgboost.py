@@ -4,7 +4,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 from src.models.xgboost import build_xgboost_model
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
 from sklearn.preprocessing import StandardScaler
 from src.utils.metrics import evaluate_model
 
@@ -49,5 +48,7 @@ default_params = {
 
 model = build_xgboost_model(default_params) # Built the XGBoost Regressor with the given parameters
 model.fit(X_train,y_train, eval_set = [(X_val, y_val)], verbose = 30)
-rmse_score = evaluate_model(model, X_test, y_test)
-print(rmse_score)
+y_pred, rmse, mae,r2 = evaluate_model(model, X_test, y_test)
+print(f"RMSE SCORE: ", rmse)
+print(f"MAE SCORE", mae)
+print(f"R2-score", r2)
