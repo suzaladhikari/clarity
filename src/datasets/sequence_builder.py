@@ -6,6 +6,7 @@ from sklearn.preprocessing import StandardScaler
 import os 
 ## Creating a combined datset 
 
+
 combined_directory = './datas/features'
 combined_data = []
 for filename in os.listdir(combined_directory):
@@ -16,6 +17,8 @@ for filename in os.listdir(combined_directory):
         combined_data.append(data)
     
 combined_stock_data = pd.concat(combined_data, ignore_index=True)
+os.makedirs('./datas/features', exist_ok=True)
+combined_stock_data.to_parquet('./datas/features/combined_data.parquet', index = False)
 
 ## Dropping the unnecessary columns 
 columns_to_drop = ['close', 'high', 'low', 'open', 'volume', 'adjClose', 'adjHigh','adjLow', 'adjOpen', 'adjVolume', 'divCash', 'splitFactor',]
