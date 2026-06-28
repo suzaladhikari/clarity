@@ -1,5 +1,5 @@
 import xgboost as xgb
-
+import pickle
 
 def build_xgboost_model(params = None):
     default_params = {
@@ -16,3 +16,9 @@ def build_xgboost_model(params = None):
         default_params.update(params)
     
     return xgb.XGBRegressor(**default_params)
+
+
+def saving_model(model):
+    saving_path = '/models_saved/xgboost'
+    with open(saving_path, 'wb') as f:
+        pickle.dump(model, f)
