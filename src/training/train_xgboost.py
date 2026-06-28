@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
 from sklearn.preprocessing import StandardScaler
-
+from src.utils.metrics import evaluate_model
 
 combined_stock_data = pd.read_parquet('./datas/features/combined_data.parquet')
 ## Doing the train, validation and test split with the date
@@ -35,7 +35,7 @@ y_test = test_split[TARGET]
 ## Loading data is done ! 
 
 default_params = {
-    'n_estimators': 1000,  ## Setting it high and using early stopping rounds to determine what to choose     
+    'n_estimators': 570,  ## Setting it high and using early stopping rounds to determine what to choose     
     'max_depth': 4,             
     'learning_rate': 0.01,      
     'subsample': 0.8,
@@ -49,4 +49,5 @@ default_params = {
 
 model = build_xgboost_model(default_params) # Built the XGBoost Regressor with the given parameters
 model.fit(X_train,y_train, eval_set = [(X_val, y_val)], verbose = 30)
-
+rmse_score = evaluate_model(model, X_test, y_test)
+print(rmse_score)
