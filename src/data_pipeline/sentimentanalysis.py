@@ -21,3 +21,5 @@ def get_fed_url(start_date = 2008):
             statement_urls.append(full_url)
     return statement_urls
     
+alex = get_fed_url()
+print(alex[0])
