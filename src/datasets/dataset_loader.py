@@ -22,3 +22,6 @@ test_dataset = TensorDataset(X_test, y_test)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle = True)
 validation_loader = DataLoader(validation_dataset, batch_size=32, shuffle=False)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+
+
+print(train_loader.shape)

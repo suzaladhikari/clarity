@@ -58,3 +58,4 @@ X_train, y_train = creating_sequences(train_split, scalable_columns)
 X_val, y_val = creating_sequences(validation_split, scalable_columns)
 X_test, y_test = creating_sequences(test_split, scalable_columns)
 
+print(X_train.shape)
