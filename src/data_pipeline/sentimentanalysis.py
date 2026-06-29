@@ -13,7 +13,6 @@ def fetch_news(ticker, start_date, api_key):
     params = {
         "tickers":ticker,
         "startDate": start_date, 
-        "endDate":end_date, 
         "token": api_key
     }
     response = requests.get(url, params= params)
@@ -46,7 +45,7 @@ def build_daily_sentiment(ticker, start_date, api_key):
         ## Storing the date of the article published
         date = pd.to_datetime(article['publishedDate']).date() ## date of published
         headline = article.get('title', '') ## Storing the title only, thats all we need
-        score = score_headline(article) ## Calculating the score
+        score = score_headline(headline) ## Calculating the score
         records.append({'date':date, 'sentiment': score})
 
     data = pd.DataFrame(records)
@@ -58,7 +57,11 @@ def build_daily_sentiment(ticker, start_date, api_key):
     return daily
 
 
-
+all_sentiments = []
 
 for stock in watchlist:
-    build_daily_sentiment(stock, '2008-01-01','8e14d5babfe29c8815f268eb1afa1727ce18f16e' )
+    stockData = build_daily_sentiment(stock, '2008-01-01','8e14d5babfe29c8815f268eb1afa1727ce18f16e' )
+    all_sentiments.append(stockData)
+
+sentiment_data = pd.concat(all_sentiments, ignore_index=True)
+print(sentiment_data.shape[0])
