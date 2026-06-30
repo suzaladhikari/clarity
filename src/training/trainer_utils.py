@@ -3,10 +3,12 @@ import torch
 import torch.nn as nn 
 
 def model_train_and_validate(model,epoches, train_loader, validation_loader, optimizer, loss_method, device):
+    model.to(device)
     for epoch in range(epoches):
         model.train()
         train_loss = 0
         for batch in train_loader:
+            batch.to(device)
             optimizer.zero_grad()
             samples, features = batch 
             samples.to(device)
@@ -22,6 +24,7 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
         validation_loss = 0
         with torch.no_grad():
             for batch in validation_loader:
+                batch.to(device)
                 samples, features = batch 
                 samples.to(device)
                 features.to(device)
@@ -30,3 +33,4 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
                 validation_loss += loss.item()
             validatoion_loss = validation_loss/len(validation_loader.dataset)
     return training_loss, validatoion_loss
+
