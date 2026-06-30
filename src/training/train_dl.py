@@ -47,3 +47,5 @@ for epoch in range(epochs):
             validation_loss += loss.item()
         
         print(f"Epoch {epoch+1}/{epochs}, Loss -> {validation_loss/len(validation_loader.dataset) :.6f}")
+
+
