@@ -20,4 +20,4 @@ def deep_evaluation(predicted, true_values):
     ss_tot = torch.sum((true_values - true_values.mean()) ** 2)
     r2 = (1 - ss_res / ss_tot).item()
 
-    return mae, rmse, ss_res, ss_tot, r2
+    return mae, rmse, r2
