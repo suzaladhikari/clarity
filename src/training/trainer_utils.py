@@ -16,7 +16,7 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
             loss.backward()
             optimizer.step()
             train_loss += loss.item()
-        print(f"{epoch}/{epoches} , Training_loss:{train_loss/len(train_loader.dataset)}")
+        training_loss = train_loss/len(train_loader.dataset)
 
         model.eval()
         validation_loss = 0
@@ -28,4 +28,5 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
                 output = model(samples)
                 loss = loss_method(output, features)
                 validation_loss += loss.item()
-            print(f"{epoch}/{epoches} , Training_loss:{validation_loss/len(validation_loader.dataset)}")
+            validatoion_loss = validation_loss/len(validation_loader.dataset)
+    return training_loss, validatoion_loss
