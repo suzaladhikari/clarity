@@ -12,6 +12,8 @@ def evaluate_model(model, X_test, y_test):
 ## For the deep learning models 
 
 def deep_evaluation(predicted, true_values):
+    predicted = torch.cat(predicted)
+    true_values = torch.cat(true_values)
     mae = torch.mean(torch.abs(predicted - true_values)).item()
     rmse = torch.sqrt(torch.mean((predicted - true_values) ** 2)).item()
     ss_res = torch.sum((true_values - predicted) ** 2)
