@@ -17,8 +17,9 @@ model.to(device)
 ## Setting up the loss function and optimizer 
 optimizer = torch.optim.Adam(model.parameters(), lr = 0.01)
 loss_function = nn.MSELoss()
-model.train()
+
 for epoch in range(epochs):
+    model.train()
     total_loss = 0 
     for batch in train_loader:
         optimizer.zero_grad()
@@ -36,12 +37,14 @@ for epoch in range(epochs):
 
     model.eval()
     validation_loss = 0
-    for batch in validation_loader: 
-        samples, features = batch 
-        samples.to(device)
-        features.to(device)
-        output = model(samples)
-        loss = loss_function(output, features)
-        validation_loss += loss.item()
-    
-    print(f"Epoch {epoch+1}/{epochs}, Loss -> {validation_loss/len(validation_loader.dataset) :.6f}")
+    with torch.no_grad():
+        for batch in validation_loader: 
+
+            samples, features = batch 
+            samples = samples.to(device)
+            features = features.to(device)
+            output = model(samples)
+            loss = loss_function(output, features)
+            validation_loss += loss.item()
+        
+        print(f"Epoch {epoch+1}/{epochs}, Loss -> {validation_loss/len(validation_loader.dataset) :.6f}")
