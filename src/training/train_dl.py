@@ -12,9 +12,6 @@ device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 epochs = 20
 
 ## Taking the trainloader, validation loader and test loader to the device
-train_loader.to(device)
-validation_loader.to(device)
-test_loader.to(device)
 ## Setting up the model 
 model = RNN(16, 32)
 model.to(device)

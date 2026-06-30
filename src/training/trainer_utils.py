@@ -11,8 +11,8 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
             batch.to(device)
             optimizer.zero_grad()
             samples, features = batch 
-            samples.to(device)
-            features.to(device)
+            samples = samples.to(device)
+            features = features.to(device)
             output = model(samples)
             loss = loss_method(output, features)
             loss.backward()
@@ -24,10 +24,9 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
         validation_loss = 0
         with torch.no_grad():
             for batch in validation_loader:
-                batch.to(device)
                 samples, features = batch 
-                samples.to(device)
-                features.to(device)
+                samples = samples.to(device)
+                features = features.to(device)
                 output = model(samples)
                 loss = loss_method(output, features)
                 validation_loss += loss.item()
