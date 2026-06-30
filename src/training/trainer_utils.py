@@ -8,7 +8,6 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
         model.train()
         train_loss = 0
         for batch in train_loader:
-            batch.to(device)
             optimizer.zero_grad()
             samples, features = batch 
             samples = samples.to(device)
@@ -33,3 +32,23 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
             validatoion_loss = validation_loss/len(validation_loader.dataset)
     return training_loss, validatoion_loss
 
+
+def model_test(model, test_loader, loss_method, device):
+    model.to(device)
+    test_loss = 0.0
+    true_values = []
+    predicted = []
+    accuracy = 0.0
+    model.eval()
+    for batch in test_loader:
+        samples, features = batch 
+        samples = samples.to(device)
+        features = features.to(device)
+        output = model(samples)
+        predicted.append(output)
+        loss = loss_method(output, features)
+        test_loss += loss.item()
+        true_values.append(features)
+    testing_loss = test_loss/len(test_loader.dataset)
+    accuracy = predicted/true_values * 100
+    return testing_loss, true_values, predicted, accuracy 
