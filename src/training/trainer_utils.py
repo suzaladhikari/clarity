@@ -1,6 +1,7 @@
 ## Creating the traiing and testing function automatically 
 import torch 
 import torch.nn as nn 
+from src.utils.metrics import deep_evaluation
 
 def model_train_and_validate(model,epoches, train_loader, validation_loader, optimizer, loss_method, device):
     model.to(device)
@@ -40,15 +41,18 @@ def model_test(model, test_loader, loss_method, device):
     predicted = []
     accuracy = 0.0
     model.eval()
-    for batch in test_loader:
-        samples, features = batch 
-        samples = samples.to(device)
-        features = features.to(device)
-        output = model(samples)
-        predicted.append(output)
-        loss = loss_method(output, features)
-        test_loss += loss.item()
-        true_values.append(features)
-    testing_loss = test_loss/len(test_loader.dataset)
-    accuracy = predicted/true_values * 100
-    return testing_loss, true_values, predicted, accuracy 
+    with torch.no_grad():
+        for batch in test_loader:
+            samples, features = batch 
+            samples = samples.to(device)
+            features = features.to(device)
+            output = model(samples)
+            predicted.append(output)
+            loss = loss_method(output, features)
+            test_loss += loss.item()
+            true_values.append(features)
+        testing_loss = test_loss/len(test_loader.dataset)
+        accuracy = predicted/true_values * 100
+        mae, rmse, r2 = deep_evaluation(predicted, true_values)
+        return testing_loss, true_values, predicted, accuracy, mae, rmse, r2
+    
