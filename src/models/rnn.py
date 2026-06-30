@@ -8,6 +8,18 @@ class RNN(nn.Module):
     
         self.dropout = nn.Dropout(dropout_prob)
         self.batch_norm = nn.BatchNorm1d(hidden_size)
+        self.fc = nn.Sequential(
+            nn.Linear(hidden_size, 54),
+            nn.LeakyReLU(negative_slope=0.01),
+            nn.Dropout(dropout_prob),
+            nn.Linear(64,32),
+            nn.LeakyReLU(negative_slope=0.01),
+            nn.Dropout(dropout_prob),
+            nn.Linear(32,16),
+            nn.LeakyReLU(negative_slope=0.01),
+            nn.Dropout(dropout_prob),
+            nn.Linear(16,1)
+        )
 
     def forward(self, x):
         out, _  = self.rnn(x) ## This returns the output and the hidden state, _ consists of the final state
