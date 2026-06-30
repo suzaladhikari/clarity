@@ -19,7 +19,7 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
             optimizer.step()
             train_loss += loss.item()
         training_loss = train_loss/len(train_loader)
-
+        print(f"Epoch {epoch}/{epoches}, Training Loss {training_loss}")
         model.eval()
         validation_loss = 0
         with torch.no_grad():
@@ -31,6 +31,7 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
                 loss = loss_method(output, features)
                 validation_loss += loss.item()
             validation_loss = validation_loss/len(validation_loader)
+            print(f"Epoch {epoch}/{epoches}, Validation Loss {validation_loss}")
     return training_loss, validation_loss
 
 
@@ -50,7 +51,7 @@ def model_test(model, test_loader, loss_method, device):
             loss = loss_method(output, features)
             test_loss += loss.item()
             true_values.append(features)
-        testing_loss = test_loss/len(test_loader.dataset)
+        testing_loss = test_loss/len(test_loader)
         mae, rmse, r2 = deep_evaluation(predicted, true_values)
         return testing_loss, true_values, predicted, mae, rmse, r2
     
