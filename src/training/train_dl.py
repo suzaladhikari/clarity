@@ -31,3 +31,17 @@ for epoch in range(epochs):
         optimizer.step()
         total_loss += loss.item()
 
+    print(f"Epoch {epoch+1}/{epochs}, Loss -> {total_loss/len(train_loader.dataset) :.6f}")
+
+
+    model.eval()
+    validation_loss = 0
+    for batch in validation_loader: 
+        samples, features = batch 
+        samples.to(device)
+        features.to(device)
+        output = model(samples)
+        loss = loss_function(output, features)
+        validation_loss += loss.item()
+    
+    print(f"Epoch {epoch+1}/{epochs}, Loss -> {validation_loss/len(validation_loader.dataset) :.6f}")
