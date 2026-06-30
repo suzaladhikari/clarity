@@ -6,8 +6,7 @@ from src.datasets.dataset_loader import train_loader, validation_loader, test_lo
 import torch 
 import torch.nn as nn
 
-
-
+## Setting up the device
 device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 epochs = 20
 
