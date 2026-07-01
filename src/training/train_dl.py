@@ -11,18 +11,27 @@ from src.utils.initials import saving_pickle, loading_pickle
 ## Setting up the device
 device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 epochs = 20
-saving_directory = '/models_saved/rnn'
-
+saving_directory = 'models_saved/rnn/'
+checkpoint_dir = f"{saving_directory}rnn_best.pt"
 ## Taking the trainloader, validation loader and test loader to the device
 ## Setting up the model 
 model = RNN(16, 32)
+
+## Loading the saved directory only if it exists
+if os.path.exists(checkpoint_dir):
+    checkpoint = torch.load(checkpoint_dir)
+    model.load_state_dict(checkpoint['model_state_dict'])
+else: 
+    print("No Checkpoint found ")
 model.to(device)
 ## Setting up the loss function and optimizer 
 optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
 loss_function = nn.MSELoss()
 
 ## Getting the training and validation loss 
-train_loss, validation_loss = model_train_and_validate(model, epochs, train_loader, validation_loader, optimizer, loss_function, device,saving_directory, 'rnn')
+calculation= model_train_and_validate(model, epochs, train_loader, validation_loader, optimizer, loss_function, device,saving_directory, 'rnn')
+training_loss = calculation['train_loss']
+validation_loss = calculation['val_loss']
 testing_loss, true_values, predicted, mae, rmse, r2 = model_test(model, test_loader, loss_function, device)
 print("Is it running")
 print(f"Test Loss {testing_loss}, validatiion_loss ->{validation_loss}, t{train_loss}")
