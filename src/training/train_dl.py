@@ -11,6 +11,7 @@ from src.utils.initials import saving_pickle, loading_pickle
 ## Setting up the device
 device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 epochs = 20
+saving_directory = '/models_saved/rnn'
 
 ## Taking the trainloader, validation loader and test loader to the device
 ## Setting up the model 
@@ -21,13 +22,12 @@ optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
 loss_function = nn.MSELoss()
 
 ## Getting the training and validation loss 
-train_loss, validation_loss = model_train_and_validate(model, epochs, train_loader, validation_loader, optimizer, loss_function, device)
+train_loss, validation_loss = model_train_and_validate(model, epochs, train_loader, validation_loader, optimizer, loss_function, device,saving_directory, 'rnn')
 testing_loss, true_values, predicted, mae, rmse, r2 = model_test(model, test_loader, loss_function, device)
 print("Is it running")
 print(f"Test Loss {testing_loss}, validatiion_loss ->{validation_loss}, t{train_loss}")
 
 ## Saving the model 
 
-filepath = '/models_saved/rnn/'
-saving_pickle(filepath, model )
+
 
