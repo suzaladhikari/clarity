@@ -2,9 +2,12 @@
 import torch 
 import torch.nn as nn 
 from src.utils.metrics import deep_evaluation
+import os 
 
-def model_train_and_validate(model,epoches, train_loader, validation_loader, optimizer, loss_method, device):
+def model_train_and_validate(model,epoches, train_loader, validation_loader, optimizer, loss_method, device, saving_directory, model_name):
     model.to(device)
+    best_val_loss = float('inf')
+    history = {"train_loss": [], "val_loss": []} 
     for epoch in range(epoches):
         model.train()
         train_loss = 0
@@ -18,8 +21,10 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
             loss.backward()
             optimizer.step()
             train_loss += loss.item()
+        
         training_loss = train_loss/len(train_loader)
-        print(f"Epoch {epoch}/{epoches}, Training Loss {training_loss}")
+        history['train_loss'].append(training_loss)
+        print(f"Epoch {epoch+1}/{epoches}, Training Loss {training_loss}")
         model.eval()
         validation_loss = 0
         with torch.no_grad():
@@ -30,9 +35,21 @@ def model_train_and_validate(model,epoches, train_loader, validation_loader, opt
                 output = model(samples)
                 loss = loss_method(output, features)
                 validation_loss += loss.item()
-            validation_loss = validation_loss/len(validation_loader)
-            print(f"Epoch {epoch}/{epoches}, Validation Loss {validation_loss}")
-    return training_loss, validation_loss
+        validation_loss = validation_loss/len(validation_loader)
+        history['val_loss'].append(validation_loss)
+        print(f"Epoch {epoch+1}/{epoches}, Validation Loss {validation_loss}")
+        if validation_loss < best_val_loss:
+            best_val_loss = validation_loss
+            torch.save({
+                "epoch": epoch+1, 
+                "model_state_dict": model.state_dict(),
+                "optimizer_state_dict": optimizer.state_dict(),
+                "train_loss": training_loss,
+                "val_loss": validation_loss, 
+                "history": history
+
+            }, f"{saving_directory}{model_name}_best.pt")
+    return history
 
 
 def model_test(model, test_loader, loss_method, device):
@@ -55,3 +72,4 @@ def model_test(model, test_loader, loss_method, device):
         mae, rmse, r2 = deep_evaluation(predicted, true_values)
         return testing_loss, true_values, predicted, mae, rmse, r2
     
+
