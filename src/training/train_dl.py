@@ -6,6 +6,7 @@ from src.datasets.dataset_loader import train_loader, validation_loader, test_lo
 import torch 
 import torch.nn as nn
 from src.training.trainer_utils import model_train_and_validate, model_test
+from src.utils.initials import saving_pickle, loading_pickle
 
 ## Setting up the device
 device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
@@ -25,5 +26,8 @@ testing_loss, true_values, predicted, mae, rmse, r2 = model_test(model, test_loa
 print("Is it running")
 print(f"Test Loss {testing_loss}, validatiion_loss ->{validation_loss}, t{train_loss}")
 
+## Saving the model 
 
-## 
+filepath = '/models_saved/rnn/'
+saving_pickle(filepath, model )
+
