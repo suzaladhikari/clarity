@@ -20,7 +20,7 @@ class LSTM(nn.Module):
         )
 
     def forward(self, x):
-        out = self.lstm(x)
+        out,_= self.lstm(x) ## Discarded the long term and short term state updates
         out = out[:,-1,:]
         out = self.batch_norm(out)
         out = self.fc(out)
