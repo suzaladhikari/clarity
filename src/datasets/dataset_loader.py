@@ -5,6 +5,22 @@ import pandas as pd
 import torch 
 from torch.utils.data import DataLoader, TensorDataset
 from src.datasets.sequence_builder import X_train, y_train, X_test, y_test, X_val, y_val 
+import random
+import numpy as np 
+
+## Setting up the random seed 
+
+RANDOMSEED = 42
+random.seed(RANDOMSEED)
+np.random.seed(RANDOMSEED)
+torch.manual_seed(RANDOMSEED)
+if torch.backends.mps.is_available():
+    torch.mps.manual_seed(RANDOMSEED)
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+### Creating a generator to pass into the data loader 
+g = torch.Generator()
+g.manual_seed(RANDOMSEED)
 
 X_train= torch.FloatTensor(X_train)
 y_train= torch.FloatTensor(y_train).view(-1,1) ## Adding the dimension to the input
@@ -22,6 +38,6 @@ test_dataset = TensorDataset(X_test, y_test)
 
 ### Creating the data loader
 
-train_loader = DataLoader(train_dataset, batch_size=128, shuffle = True)
-validation_loader = DataLoader(validation_dataset, batch_size=128, shuffle=False)
-test_loader = DataLoader(test_dataset, batch_size=128, shuffle=False)
+train_loader = DataLoader(train_dataset, batch_size=128, shuffle = True, generator=g)
+validation_loader = DataLoader(validation_dataset, batch_size=128, shuffle=False, generator=g)
+test_loader = DataLoader(test_dataset, batch_size=128, shuffle=False, generator=g)
