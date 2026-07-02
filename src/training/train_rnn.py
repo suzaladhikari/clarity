@@ -36,7 +36,7 @@ testing_loss, true_values, predicted, mae, rmse, r2 = model_test(model, test_loa
 print("Is it running")
 print(f"Test Loss {testing_loss}, validatiion_loss ->{validation_loss[-1]}, t{training_loss[-1]}, MAE:{mae}, RMSE:{rmse}, r2:{r2}")
 
-## Saving the model 
+
 
 
 
