@@ -39,5 +39,5 @@ test_dataset = TensorDataset(X_test, y_test)
 ### Creating the data loader
 
 train_loader = DataLoader(train_dataset, batch_size=128, shuffle = True, generator=g)
-validation_loader = DataLoader(validation_dataset, batch_size=128, shuffle=False, generator=g)
-test_loader = DataLoader(test_dataset, batch_size=128, shuffle=False, generator=g)
+validation_loader = DataLoader(validation_dataset, batch_size=128, shuffle=False )
+test_loader = DataLoader(test_dataset, batch_size=128, shuffle=False)
