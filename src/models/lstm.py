@@ -18,3 +18,10 @@ class LSTM(nn.Module):
             nn.Dropout(dropout_prob),
             nn.Linear(16,1)
         )
+
+    def forward(self, x):
+        out = self.lstm(x)
+        out = out[:,-1,:]
+        out = self.batch_norm(out)
+        out = self.fc(out)
+        return out 
