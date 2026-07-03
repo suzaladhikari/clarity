@@ -50,3 +50,5 @@ all_predictions = all_predictions.flatten()
 mae = mean_absolute_error(all_true, all_predictions)
 rmse = np.sqrt(mean_squared_error(all_true, all_predictions))
 r2 = r2_score(all_true, all_predictions)
+
+print(mae, rmse, r2)
