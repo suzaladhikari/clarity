@@ -5,6 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 import numpy as np
 import pandas as pd 
 from src.models.garch import Garch
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 ### Data 
 data = pd.read_parquet('./datas/features/combined_data.parquet')
 
@@ -44,3 +45,8 @@ for symbol, group in data.groupby('Symbol'):
 all_predictions = np.array(all_predictions)
 all_true = np.array(all_true)
 
+all_predictions = all_predictions.flatten()
+
+mae = mean_absolute_error(all_true, all_predictions)
+rmse = np.sqrt(mean_squared_error(all_true, all_predictions))
+r2 = r2_score(all_true, all_predictions)
