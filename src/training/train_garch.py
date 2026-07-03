@@ -37,4 +37,11 @@ for ticker, group in data.groupby('ticker'):
     full_variance = garch.computing_variance(full_returns)
     test_variance = full_variance[len(train_result):]
     test_vol_pred = np.sqrt(test_variance)
-    
+
+
+    all_predictions.append(test_vol_pred)
+    all_true.extend(true_volataility)
+
+all_predictions = np.array(all_predictions)
+all_true = np.array(all_true)
+
