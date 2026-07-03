@@ -33,4 +33,6 @@ for ticker, group in data.groupby('ticker'):
 
     ## Forecasting on test 
     garch = Garch(omega, alpha, beta)
-    full_returns = 
+    full_returns = np.concatenate([train_result, test_result])
+    full_variance = garch.computing_variance(full_returns)
+    
