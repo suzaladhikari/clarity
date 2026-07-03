@@ -20,4 +20,9 @@ for ticker, group in data.groupby('ticker'):
     train_result = train['log_return'].values * 100
     test_result = test['log_return'].values * 100
     true_volataility = test['rolling_vol_5'].values
-    
+
+    ### Fitting the model on the arch model 
+
+    model = arch_model(train_result, vol = 'Garch', p=1, q=1)
+    results = model.fit(disp = 'off')
+
