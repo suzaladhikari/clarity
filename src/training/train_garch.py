@@ -8,12 +8,11 @@ from src.models.garch import Garch
 ### Data 
 data = pd.read_parquet('./datas/features/combined_data.parquet')
 
-print(data.columns)
 
 all_predictions = []
 all_true = []
 
-for ticker, group in data.groupby('ticker'):
+for symbol, group in data.groupby('Symbol'):
     group = group.sort_values('date').reset_index(drop = True)
     train = group[group['date'] < '2022-01-01']
     test = group[group['date'] >= '2022-01-01']
@@ -45,3 +44,5 @@ for ticker, group in data.groupby('ticker'):
 all_predictions = np.array(all_predictions)
 all_true = np.array(all_true)
 
+print(all_predictions)
+print(all_true)
