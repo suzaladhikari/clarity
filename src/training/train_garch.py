@@ -10,3 +10,14 @@ data = pd.read_parquet('./datas/features/combined_data.parquet')
 
 print(data.columns)
 
+all_predictions = []
+all_true = []
+
+for ticker, group in data.groupby('ticker'):
+    group = group.sort_values('date').reset_index(drop = True)
+    train = group[group['date'] < '2022-01-01']
+    test = group[group['date'] >= '2022-01-01']
+    train_result = train['log_return'].values * 100
+    test_result = test['log_return'].values * 100
+    true_volataility = test['rolling_vol_5'].values
+    
