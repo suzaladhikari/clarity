@@ -26,3 +26,11 @@ for ticker, group in data.groupby('ticker'):
     model = arch_model(train_result, vol = 'Garch', p=1, q=1)
     results = model.fit(disp = 'off')
 
+    omega = results.params['omega']
+    alpha = results.params['alpha[1]']
+    beta = results.params['beta[1]']
+
+
+    ## Forecasting on test 
+    garch = Garch(omega, alpha, beta)
+    full_returns = 
