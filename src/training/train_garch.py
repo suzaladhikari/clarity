@@ -44,5 +44,3 @@ for symbol, group in data.groupby('Symbol'):
 all_predictions = np.array(all_predictions)
 all_true = np.array(all_true)
 
-print(all_predictions)
-print(all_true)
