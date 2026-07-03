@@ -10,4 +10,9 @@ testing_data = data[data['date'] >= '2022-01-01'].copy()
 model = arch_model(training_data['log_return'])
 results = model.fit(disp = 'off') ## Used this to get the cleaner output
 
-print(results.params)
+### Extracting the omega, alpha and beta
+omega = results.params['omega']
+alpha = results.params['alpha[1]']
+beta = results.params['beta[1]']
+
+
