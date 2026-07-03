@@ -40,7 +40,7 @@ def feature_creation(data):
     data['excess_return'] = data['log_return'] - data['sp5_log_return']
     data['vol_ratio'] = data['rolling_vol_20'] / data['sp5_20_volatility']
     ## Label: next day volatility 
-    data['target_volatility'] = data['rolling_vol_20'].shift(-1)
+    data['target_volatility'] = data['rolling_vol_5'].shift(-1)
 
     data = data.dropna()
     return data
