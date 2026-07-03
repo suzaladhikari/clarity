@@ -35,4 +35,6 @@ for ticker, group in data.groupby('ticker'):
     garch = Garch(omega, alpha, beta)
     full_returns = np.concatenate([train_result, test_result])
     full_variance = garch.computing_variance(full_returns)
+    test_variance = full_variance[len(train_result):]
+    test_vol_pred = np.sqrt(test_variance)
     
