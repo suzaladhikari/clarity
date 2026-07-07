@@ -43,3 +43,5 @@ combined_results['r2'] = [lstm_model_results['r2'], rnn_model_results['r2'], xgb
 
 models_performance = pd.DataFrame(combined_results)
 
+### Scaler feri use gar hai ta like reusable scaler use garne isn all the models 
+### ani tespachi plot the necessary pictures to evaluate the model
