@@ -33,10 +33,16 @@ calculation= model_train_and_validate(model, epochs, train_loader, validation_lo
 training_loss = calculation['train_loss']
 validation_loss = calculation['val_loss']
 testing_loss, true_values, predicted, mae, rmse, r2 = model_test(model, test_loader, loss_function, device)
+
 print("Is it running")
 print(f"Test Loss {testing_loss}, validatiion_loss ->{validation_loss[-1]}, t{training_loss[-1]}, MAE:{mae}, RMSE:{rmse}, r2:{r2}")
 
-
+rnn_results = {}
+rnn_results['true_values'] = true_values
+rnn_results['predicted'] = predicted
+rnn_results['mae'] = mae
+rnn_results['rmse'] = rmse
+rnn_results['r2'] = r2
 
 
 
