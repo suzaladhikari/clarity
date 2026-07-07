@@ -43,7 +43,7 @@ def xgboost_model(combined_stock_data):
         'gamma': 0.1,               
         'objective': 'reg:squarederror',
         'random_state': 42,
-        'n_jobs': -1
+        'n_jobs': 4
     }
 
 
