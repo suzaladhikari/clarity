@@ -32,3 +32,11 @@ validation_loss = calculation['val_loss']
 testing_loss, true_values, predicted, mae, rmse, r2 = model_test(model, test_loader, loss_function, device)
 print("Is it running")
 print(f"Test Loss {testing_loss}, validatiion_loss ->{validation_loss[-1]}, t{training_loss[-1]}, MAE:{mae}, RMSE:{rmse}, r2:{r2}")
+
+
+lstm_results = {}
+lstm_results['true_values'] = true_values
+lstm_results['predicted'] = predicted
+lstm_results['mae'] = mae
+lstm_results['rmse'] = rmse
+lstm_results['r2'] = r2
