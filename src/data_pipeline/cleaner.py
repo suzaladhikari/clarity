@@ -1,8 +1,9 @@
 ## Handling all the missing values 
+
 import os 
 import pandas as pd 
 import numpy as np 
-from ingest import watchlist, market
+from src.data_pipeline.ingest import watchlist, market
 
 def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan data types
     path = os.path.join("datas", "raw")
@@ -25,9 +26,8 @@ def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan
     data.to_parquet(savingname, index = False) ## Converting them back to parquet and stroing them in the processed 
     return data
 
-
-for key in watchlist.keys():
-    data_corrector(key)
-
-for key in market.keys():
-    data_corrector(key)
+if __name__ == "__main__":
+    for key in watchlist.keys():
+        data_corrector(key)
+    for key in market.keys():
+        data_corrector(key)
