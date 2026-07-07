@@ -4,7 +4,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 import pandas as pd
 import torch 
 from torch.utils.data import DataLoader, TensorDataset
-from src.datasets.sequence_builder import X_train, y_train, X_test, y_test, X_val, y_val 
 import random
 import numpy as np 
 
