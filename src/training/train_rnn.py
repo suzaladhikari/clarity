@@ -1,12 +1,11 @@
 import sys 
 import os 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
-from src.datasets.dataset_loader import train_loader, validation_loader, test_loader
 from src.models.rnn import RNN
 import torch 
 import torch.nn as nn
-from src.training.trainer_utils import model_train_and_validate, model_test
 from src.utils.initials import saving_pickle, loading_pickle
+from src.training.trainer_utils import model_train_and_validate, model_test
 
 ## Setting up the device
 device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
