@@ -58,14 +58,17 @@ def company_datasets(symbol):
     data["Symbol"] = symbol
     data.to_parquet(filepath, index = False)
     return data
-for key,value in watchlist.items():
-    company_datasets(key)
+
 
 
 ### Market tracking 
 market = {'SPY': 'S & P 500'}
-for key in market.keys():
-    company_datasets(key)
+if __name__ == "__main__":
+    for key, value in watchlist.items():
+        company_datasets(key)
+    for key in market.keys():
+        company_datasets(key)
+
 
 
 
