@@ -34,7 +34,9 @@ lstm_model_results = lstm_model(train_loader, validation_loader, test_loader)
 rnn_model_results = rnn_model(train_loader, validation_loader, test_loader)
 xgboost_resutls = xgboost_model(combined_stock_data)
 garch_results = garch_model(combined_stock_data)
-print(xgboost_resutls['rmse'])
+
+combined_results = {}
+combined_results['mae'] = [lstm_model_results['mae'], rnn_model_results['mae'], xgboost_resutls['mae'], garch_results['mae']]
 
 ## Ani tes pachi make sure you save the whole files in the dictionary ! got it 
 ## Ani __name__ == __main__ ko use ni k huncha bhanera bujne 
