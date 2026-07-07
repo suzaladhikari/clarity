@@ -7,3 +7,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 from src.data_pipeline.ingest import company_datasets ## Function to extract the company dataset 
 
 
+def extracting_to_final_data(key):
+    rawdata = company_datasets(key)
+
