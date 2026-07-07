@@ -46,9 +46,10 @@ def xgboost_model(combined_stock_data):
         'n_jobs': -1
     }
 
-    saving_model(model)
+
     model = build_xgboost_model(default_params) # Built the XGBoost Regressor with the given parameters
     model.fit(X_train,y_train, eval_set = [(X_val, y_val)], verbose = 30)
+    saving_model(model)
     rmse, mae,r2 = evaluate_model(model, X_test, y_test)
 
     xgboost_results = {}
