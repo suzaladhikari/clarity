@@ -2,7 +2,7 @@
 import pandas as pd
 import os 
 import numpy as np
-from ingest import watchlist
+from src.data_pipeline.cleaner import watchlist
 ### Here we will be creating new features 
 
 ### S & P 500 
