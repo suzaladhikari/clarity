@@ -17,32 +17,35 @@ checkpoint_dir = f"{saving_directory}rnn_best.pt"
 ## Setting up the model 
 model = RNN(16, 32)
 
+def rnn_model(train_loader, validation_loader, test_loader):
 ## Loading the saved directory only if it exists
-if os.path.exists(checkpoint_dir):
-    checkpoint = torch.load(checkpoint_dir)
-    model.load_state_dict(checkpoint['model_state_dict'])
-else: 
-    print("No Checkpoint found ")
-model.to(device)
-## Setting up the loss function and optimizer 
-optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
-loss_function = nn.MSELoss()
+    if os.path.exists(checkpoint_dir):
+        checkpoint = torch.load(checkpoint_dir)
+        model.load_state_dict(checkpoint['model_state_dict'])
+    else: 
+        print("No Checkpoint found ")
+    model.to(device)
+    ## Setting up the loss function and optimizer 
+    optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
+    loss_function = nn.MSELoss()
 
-## Getting the training and validation loss 
-calculation= model_train_and_validate(model, epochs, train_loader, validation_loader, optimizer, loss_function, device,saving_directory, 'rnn')
-training_loss = calculation['train_loss']
-validation_loss = calculation['val_loss']
-testing_loss, true_values, predicted, mae, rmse, r2 = model_test(model, test_loader, loss_function, device)
+    ## Getting the training and validation loss 
+    calculation= model_train_and_validate(model, epochs, train_loader, validation_loader, optimizer, loss_function, device,saving_directory, 'rnn')
+    training_loss = calculation['train_loss']
+    validation_loss = calculation['val_loss']
+    testing_loss, true_values, predicted, mae, rmse, r2 = model_test(model, test_loader, loss_function, device)
 
-print("Is it running")
-print(f"Test Loss {testing_loss}, validatiion_loss ->{validation_loss[-1]}, t{training_loss[-1]}, MAE:{mae}, RMSE:{rmse}, r2:{r2}")
+    print("Is it running")
+    print(f"Test Loss {testing_loss}, validatiion_loss ->{validation_loss[-1]}, t{training_loss[-1]}, MAE:{mae}, RMSE:{rmse}, r2:{r2}")
 
-rnn_results = {}
-rnn_results['true_values'] = true_values
-rnn_results['predicted'] = predicted
-rnn_results['mae'] = mae
-rnn_results['rmse'] = rmse
-rnn_results['r2'] = r2
+    rnn_results = {}
+    rnn_results['true_values'] = true_values
+    rnn_results['predicted'] = predicted
+    rnn_results['mae'] = mae
+    rnn_results['rmse'] = rmse
+    rnn_results['r2'] = r2
+
+    return rnn_results
 
 
 
