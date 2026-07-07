@@ -37,6 +37,9 @@ garch_results = garch_model(combined_stock_data)
 
 combined_results = {}
 combined_results['mae'] = [lstm_model_results['mae'], rnn_model_results['mae'], xgboost_resutls['mae'], garch_results['mae']]
+combined_results['rmse'] = [lstm_model_results['rmse'], rnn_model_results['rmse'], xgboost_resutls['rmse'], garch_results['rmse']]
+combined_results['r2'] = [lstm_model_results['r2'], rnn_model_results['r2'], xgboost_resutls['r2'], garch_results['r2']]
+
 
 ## Ani tes pachi make sure you save the whole files in the dictionary ! got it 
 ## Ani __name__ == __main__ ko use ni k huncha bhanera bujne 
