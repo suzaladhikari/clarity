@@ -45,6 +45,7 @@ def garch_model(data):
     all_true = np.array(all_true)
 
     all_predictions = all_predictions.flatten()
+    all_true = all_true.flatten()
 
     mae = mean_absolute_error(all_true, all_predictions)
     rmse = np.sqrt(mean_squared_error(all_true, all_predictions))
@@ -52,7 +53,7 @@ def garch_model(data):
 
     garch_results = {}
     garch_results['y_pred'] = all_predictions
-    garch_results['true_labels'] = true_volataility
+    garch_results['true_labels'] = all_true
     garch_results['mae'] = mae
     garch_results['rmse'] = rmse
     garch_results['r2'] = r2
