@@ -12,7 +12,7 @@ from src.datasets.dataset_loader import creating_data_loaders
 from src.training.train_lstm import lstm_model
 from src.training.train_rnn import rnn_model 
 from src.training.train_xgboost import xgboost_model
-
+from src.training.train_garch import garch_model
 def extracting_to_final_data(key):
     correctedData = data_corrector(key)
     feature_engineering = feature_creation(correctedData)
@@ -41,6 +41,5 @@ combined_results['rmse'] = [lstm_model_results['rmse'], rnn_model_results['rmse'
 combined_results['r2'] = [lstm_model_results['r2'], rnn_model_results['r2'], xgboost_resutls['r2'], garch_results['r2']]
 
 
-## Ani tes pachi make sure you save the whole files in the dictionary ! got it 
-## Ani __name__ == __main__ ko use ni k huncha bhanera bujne 
-## Ani make sure you create the reusable function in seqeucen builder and also the dataloader to carry on your project
+models_performance = pd.DataFrame(combined_results)
+
