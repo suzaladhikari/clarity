@@ -16,19 +16,15 @@ def xgboost_model(combined_stock_data):
     TARGET = 'target_volatility'
     ## Scaling the features
 
-    scaler = StandardScaler()
-    scalable_columns = [c for c in combined_stock_data.columns if c not in DROP_COLS]
-    train_split[scalable_columns] = scaler.fit_transform(train_split[scalable_columns])
-    validation_split[scalable_columns] = scaler.transform(validation_split[scalable_columns])
-    test_split[scalable_columns] = scaler.transform(test_split[scalable_columns])
+    trainable_columns = [c for c in combined_stock_data.columns if c not in DROP_COLS]
 
-    X_train = train_split[scalable_columns] 
+    X_train = train_split[trainable_columns] 
     y_train = train_split[TARGET]
 
-    X_val = validation_split[scalable_columns]
+    X_val = validation_split[trainable_columns]
     y_val = validation_split[TARGET]
 
-    X_test = test_split[scalable_columns]
+    X_test = test_split[trainable_columns]
     y_test = test_split[TARGET]
 
     ## Loading data is done ! 
