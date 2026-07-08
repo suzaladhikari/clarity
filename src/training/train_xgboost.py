@@ -30,7 +30,7 @@ def xgboost_model(combined_stock_data):
     ## Loading data is done ! 
 
     default_params = {
-        'n_estimators': 570,  ## Setting it high and using early stopping rounds to determine what to choose     
+        'n_estimators': 2000,  ## Setting it high and using early stopping rounds to determine what to choose     
         'max_depth': 4,             
         'learning_rate': 0.01,      
         'subsample': 0.8,
@@ -44,7 +44,7 @@ def xgboost_model(combined_stock_data):
 
 
     model = build_xgboost_model(default_params) # Built the XGBoost Regressor with the given parameters
-    model.fit(X_train,y_train, eval_set = [(X_val, y_val)], verbose = 30)
+    model.fit(X_train,y_train, eval_set = [(X_val, y_val)],early_stopping_rounds = 30, verbose = 30)
     saving_model(model)
     y_pred, rmse, mae,r2, true_values= evaluate_model(model, X_test, y_test)
 
