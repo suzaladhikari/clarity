@@ -39,12 +39,13 @@ def xgboost_model(combined_stock_data):
         'gamma': 0.1,               
         'objective': 'reg:squarederror',
         'random_state': 42,
-        'n_jobs': 4
+        'n_jobs': 4,
+        'early_stopping_rounds':30
     }
 
 
     model = build_xgboost_model(default_params) # Built the XGBoost Regressor with the given parameters
-    model.fit(X_train,y_train, eval_set = [(X_val, y_val)],early_stopping_rounds = 30, verbose = 30)
+    model.fit(X_train,y_train, eval_set = [(X_val, y_val)], verbose = 30)
     saving_model(model)
     y_pred, rmse, mae,r2, true_values= evaluate_model(model, X_test, y_test)
 
