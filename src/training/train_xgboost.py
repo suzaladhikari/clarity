@@ -52,8 +52,6 @@ def xgboost_model(combined_stock_data):
     y_pred, rmse, mae,r2, true_values= evaluate_model(model, X_test, y_test)
 
     xgboost_results = {}
-    xgboost_results['y_pred'] = y_pred.tolist()
-    xgboost_results['true_labels'] = true_values.tolist()
     xgboost_results['mae'] = mae
     xgboost_results['rmse'] = rmse
     xgboost_results['r2'] = r2
