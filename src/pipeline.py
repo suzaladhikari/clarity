@@ -11,6 +11,7 @@ from src.datasets.sequence_builder import train_test_val
 from src.datasets.dataset_loader import creating_data_loaders
 from src.training.train_lstm import lstm_model
 from src.training.train_rnn import rnn_model 
+import json 
 def extracting_to_final_data(key):
     correctedData = data_corrector(key)
     feature_engineering = feature_creation(correctedData)
@@ -25,23 +26,29 @@ combined_stock_data = pd.concat(combined_data, ignore_index=True)
 combined_stock_data.to_parquet('./datas/combined_data.parquet')
 
     ## Creating the sequences out of the combined datasets
-X_train, y_train, X_val, y_val, X_test, y_test = train_test_val(combined_stock_data)
-train_loader, validation_loader, test_loader = creating_data_loaders(X_train, y_train, X_val, y_val, X_test, y_test)
+def lstm_rnn(combined_stock_data):
+    X_train, y_train, X_val, y_val, X_test, y_test = train_test_val(combined_stock_data)
+    train_loader, validation_loader, test_loader = creating_data_loaders(X_train, y_train, X_val, y_val, X_test, y_test)
 
-    ## Models 
-lstm_model_results = lstm_model(train_loader, validation_loader, test_loader)
-rnn_model_results = rnn_model(train_loader, validation_loader, test_loader)
-
-
-combined_results = {}
-combined_results['mae'] = [lstm_model_results['mae'], rnn_model_results['mae']]
-combined_results['rmse'] = [lstm_model_results['rmse'], rnn_model_results['rmse']]
-combined_results['r2'] = [lstm_model_results['r2'], rnn_model_results['r2']]
+        ## Models 
+    lstm_model_results = lstm_model(train_loader, validation_loader, test_loader)
+    rnn_model_results = rnn_model(train_loader, validation_loader, test_loader)
 
 
-models_performance = pd.DataFrame(combined_results)
+    combined_results = {}
+    combined_results['mae'] = [lstm_model_results['mae'], rnn_model_results['mae']]
+    combined_results['rmse'] = [lstm_model_results['rmse'], rnn_model_results['rmse']]
+    combined_results['r2'] = [lstm_model_results['r2'], rnn_model_results['r2']]
 
-models_performance.head(5)
+    return combined_results
 
+lstm_rnn_results = lstm_rnn(combined_stock_data)
+
+path = "./src/modelperformance/lstm_rnn_results.json"
+
+os.makedirs(os.path.dirname(path), exist_ok=True)
+
+with open(path, "w") as f:
+    json.dump(results, f, indent=4)
 ### ani tespachi plot the necessary pictures to evaluate the model
 ## just make sure to rerun the whole thing with a bit higher learning rate cause its freaking. freezing the loss
