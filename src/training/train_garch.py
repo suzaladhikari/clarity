@@ -60,3 +60,5 @@ def garch_model(data):
     garch_results['r2'] = r2
 
     return garch_results
+
+garch_results = garch_model(data)
