@@ -7,6 +7,7 @@ import pandas as pd
 from src.models.garch import Garch
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
+data = pd.read_parquet("./datas/combined_data.parquet")
 
 def garch_model(data):
     all_predictions = []
