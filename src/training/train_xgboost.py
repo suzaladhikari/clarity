@@ -4,8 +4,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 from src.models.xgboost import build_xgboost_model, saving_model
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler
 from src.utils.metrics import evaluate_model
+
+data = pd.read_parquet('./datas/combined_data.parquet')
 
 def xgboost_model(combined_stock_data):
 ## Doing the train, validation and test split with the date
@@ -58,3 +59,5 @@ def xgboost_model(combined_stock_data):
 
     return xgboost_results
 
+results = xgboost_model(data)
+print(results)
