@@ -53,8 +53,8 @@ def garch_model(data):
     r2 = r2_score(all_true, all_predictions)
 
     garch_results = {}
-    garch_results['y_pred'] = all_predictions
-    garch_results['true_labels'] = all_true
+    garch_results['y_pred'] = all_predictions.tolist()
+    garch_results['true_labels'] = all_true.tolist()
     garch_results['mae'] = mae
     garch_results['rmse'] = rmse
     garch_results['r2'] = r2
