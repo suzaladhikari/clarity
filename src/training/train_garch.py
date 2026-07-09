@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd 
 from src.models.garch import Garch
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-
+import json 
 data = pd.read_parquet("./datas/combined_data.parquet")
 
 def garch_model(data):
@@ -62,3 +62,10 @@ def garch_model(data):
     return garch_results
 
 garch_results = garch_model(data)
+
+path = "./src/modelperformance/garch_results.json"
+
+os.makedirs(os.path.dirname(path), exist_ok=True)
+
+with open(path, "w") as f:
+    json.dump(garch_results, f, indent=4)
