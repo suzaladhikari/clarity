@@ -49,6 +49,6 @@ path = "./src/modelperformance/lstm_rnn_results.json"
 os.makedirs(os.path.dirname(path), exist_ok=True)
 
 with open(path, "w") as f:
-    json.dump(results, f, indent=4)
+    json.dump(lstm_rnn_results, f, indent=4)
 ### ani tespachi plot the necessary pictures to evaluate the model
 ## just make sure to rerun the whole thing with a bit higher learning rate cause its freaking. freezing the loss
