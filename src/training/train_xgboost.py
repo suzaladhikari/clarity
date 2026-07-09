@@ -5,6 +5,7 @@ from src.models.xgboost import build_xgboost_model, saving_model
 import pandas as pd
 import numpy as np
 from src.utils.metrics import evaluate_model
+import json
 
 data = pd.read_parquet('./datas/combined_data.parquet')
 
@@ -51,8 +52,8 @@ def xgboost_model(combined_stock_data):
     y_pred, rmse, mae,r2, true_values= evaluate_model(model, X_test, y_test)
 
     xgboost_results = {}
-    xgboost_results['y_pred'] = y_pred
-    xgboost_results['true_labels'] = true_values
+    xgboost_results['y_pred'] = y_pred.tolist()
+    xgboost_results['true_labels'] = true_values.tolist()
     xgboost_results['mae'] = mae
     xgboost_results['rmse'] = rmse
     xgboost_results['r2'] = r2
@@ -60,4 +61,11 @@ def xgboost_model(combined_stock_data):
     return xgboost_results
 
 results = xgboost_model(data)
-print(results)
+print(type(results))
+
+path = "./src/modelperformance/xgboost_results.json"
+
+os.makedirs(os.path.dirname(path), exist_ok=True)
+
+with open(path, "w") as f:
+    json.dump(results, f, indent=4)

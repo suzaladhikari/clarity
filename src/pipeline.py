@@ -41,7 +41,7 @@ combined_results['r2'] = [lstm_model_results['r2'], rnn_model_results['r2']]
 
 models_performance = pd.DataFrame(combined_results)
 
-
+models_performance.head(5)
 
 ### ani tespachi plot the necessary pictures to evaluate the model
 ## just make sure to rerun the whole thing with a bit higher learning rate cause its freaking. freezing the loss
