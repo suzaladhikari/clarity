@@ -61,7 +61,7 @@ def garch_model(data):
 
 garch_results = garch_model(data)
 
-path = "./src/modelperformance/garch_results.json"
+path = "./modelperformance/garch_results.json"
 
 os.makedirs(os.path.dirname(path), exist_ok=True)
 

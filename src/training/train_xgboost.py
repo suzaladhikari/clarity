@@ -59,10 +59,8 @@ def xgboost_model(combined_stock_data):
     return xgboost_results
 
 results = xgboost_model(data)
-print(type(results))
 
 path = "./src/modelperformance/xgboost_results.json"
-
 os.makedirs(os.path.dirname(path), exist_ok=True)
 
 with open(path, "w") as f:
