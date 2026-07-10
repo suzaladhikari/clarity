@@ -1,9 +1,9 @@
 import subprocess, json, os
 import sys
 import pandas as pd
-# subprocess.run([sys.executable, 'src/pipeline.py'], check=True)
-# subprocess.run([sys.executable, 'src/training/train_xgboost.py'], check =True)
-# subprocess.run([sys.executable, 'src/training/train_garch.py'], check =True)
+subprocess.run([sys.executable, 'src/pipeline.py'], check=True)
+subprocess.run([sys.executable, 'src/training/train_xgboost.py'], check =True)
+subprocess.run([sys.executable, 'src/training/train_garch.py'], check =True)
 
 json_path = './modelperformance/'
 datasets = []
@@ -24,5 +24,4 @@ for item in datasets:
         flattened_datasets.append(item)
 
 combined_datasets = pd.DataFrame(flattened_datasets)
-
-combined_datasets.head(5)
+combined_datasets.to_parquet('./datas/modelpeformance.parquet', index = False)
