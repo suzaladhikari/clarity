@@ -8,7 +8,7 @@ from src.utils.metrics import evaluate_model
 import json
 
 data = pd.read_parquet('./datas/combined_data.parquet')
-
+print(data['date'].max(), len(data))
 def xgboost_model(combined_stock_data):
 ## Doing the train, validation and test split with the date
     train_split = combined_stock_data[combined_stock_data['date'] < '2020-01-01'].copy()
