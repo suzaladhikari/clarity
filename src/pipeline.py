@@ -51,7 +51,7 @@ def lstm_rnn(combined_stock_data):
     return combined_results
 
 lstm_rnn_results = lstm_rnn(combined_stock_data)
-
+print(lstm_rnn_results['predicted'])
 path = "./modelperformance/lstm_rnn_results.json"
 
 os.makedirs(os.path.dirname(path), exist_ok=True)
