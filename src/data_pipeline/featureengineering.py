@@ -1,6 +1,11 @@
-
-import pandas as pd
+import sys
 import os 
+sys.path.append(
+    os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "../..")
+    )
+)
+import pandas as pd
 import numpy as np
 from src.data_pipeline.cleaner import watchlist
 ### Here we will be creating new features 
