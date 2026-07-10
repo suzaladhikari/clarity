@@ -32,13 +32,26 @@ def lstm_rnn(combined_stock_data):
 
         ## Models 
     lstm_model_results = lstm_model(train_loader, validation_loader, test_loader)
-    rnn_model_results = rnn_model(train_loader, validation_loader, test_loader)
+    rnn_model_results = rnn_model(train_loader, validation_loader, test_loader)  
+    combined_results = [
+        {
+            "model": "lstm",
+            "mae": lstm_model_results["mae"],
+            "rmse": lstm_model_results["rmse"],
+            "r2": lstm_model_results["r2"],
+        },
+        {
+            "model": "rnn",
+            "mae": rnn_model_results["mae"],
+            "rmse": rnn_model_results["rmse"],
+            "r2": rnn_model_results["r2"],
+        },
+    ]
 
 
-    combined_results = {}
-    combined_results['mae'] = [lstm_model_results['mae'], rnn_model_results['mae']]
-    combined_results['rmse'] = [lstm_model_results['rmse'], rnn_model_results['rmse']]
-    combined_results['r2'] = [lstm_model_results['r2'], rnn_model_results['r2']]
+
+
+
 
     return combined_results
 
@@ -50,5 +63,3 @@ os.makedirs(os.path.dirname(path), exist_ok=True)
 
 with open(path, "w") as f:
     json.dump(lstm_rnn_results, f, indent=4)
-### ani tespachi plot the necessary pictures to evaluate the model
-## just make sure to rerun the whole thing with a bit higher learning rate cause its freaking. freezing the loss
