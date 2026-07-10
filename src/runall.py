@@ -10,8 +10,19 @@ datasets = []
 for filename in os.listdir(json_path):
     if filename.endswith('.json'):
         data =os.path.join(json_path, filename)
-        data = pd.read_json(data)
+        
+        with open(data, "r") as f:
+            data = json.load(f)
+        
         datasets.append(data)
+flattened_datasets = []
 
-combined_datasets = pd.concat(datasets, ignore_index=True)
+for item in datasets:
+    if isinstance(item, list):
+        flattened_datasets.extend(item)
+    else:
+        flattened_datasets.append(item)
+
+combined_datasets = pd.DataFrame(flattened_datasets)
+
 combined_datasets.head(5)
