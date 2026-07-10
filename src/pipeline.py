@@ -48,11 +48,6 @@ def lstm_rnn(combined_stock_data):
         },
     ]
 
-
-
-
-
-
     return combined_results
 
 lstm_rnn_results = lstm_rnn(combined_stock_data)
