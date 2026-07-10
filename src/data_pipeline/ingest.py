@@ -43,7 +43,7 @@ def company_datasets(symbol):
         existing_data = pd.read_parquet(filepath)
         if "Symbol" not in existing_data.columns:
             existing_data["Symbol"] = symbol
-        last_date = pd.to_datetime(data['date']).max()
+        last_date = pd.to_datetime(existing_data).max()
         start_date = (last_date + pd.Timedelta(days = 1)).strftime('%Y-%m-%d')
 
         if pd.to_datetime(start_date) > pd.Timestamp.today():
@@ -51,6 +51,7 @@ def company_datasets(symbol):
         API_KEY = '8e14d5babfe29c8815f268eb1afa1727ce18f16e'
         url_link = f"https://api.tiingo.com/tiingo/daily/{symbol}/prices"
         headers = {'Content-Type':'application/json'}
+        params = {'startDate': '2008-01-01', 'token':API_KEY}
         response = requests.get(url_link, headers=headers, params=params)
         new_data = pd.DataFrame(response.json())
         if new_data.empty:
