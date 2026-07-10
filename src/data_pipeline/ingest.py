@@ -40,11 +40,28 @@ def company_datasets(symbol):
     os.makedirs(path,exist_ok=True)
     filepath = os.path.join(path, f"{symbol}.parquet")
     if os.path.exists(filepath):
-        data = pd.read_parquet(filepath)
-        if "Symbol" not in data.columns:
-            data["Symbol"] = symbol
-            data.to_parquet(filepath, index = False)
-        return data
+        existing_data = pd.read_parquet(filepath)
+        if "Symbol" not in existing_data.columns:
+            existing_data["Symbol"] = symbol
+        last_date = pd.to_datetime(data['date']).max()
+        start_date = (last_date + pd.Timedelta(days = 1)).strftime('%Y-%m-%d')
+
+        if pd.to_datetime(start_date) > pd.Timestamp.today():
+            return existing_data
+        API_KEY = '8e14d5babfe29c8815f268eb1afa1727ce18f16e'
+        url_link = f"https://api.tiingo.com/tiingo/daily/{symbol}/prices"
+        headers = {'Content-Type':'application/json'}
+        response = requests.get(url_link, headers=headers, params=params)
+        new_data = pd.DataFrame(response.json())
+        if new_data.empty:
+            return existing_data
+        
+        new_data["Symbol"] = symbol
+        combined = pd.concat([existing_data, new_data], ignore_index=True)
+        combined = combined.drop_duplicates(subset=['date'], keep = 'last')
+        combined.to_parquet(filepath, index = False)
+        return combined
+    
     API_KEY = '8e14d5babfe29c8815f268eb1afa1727ce18f16e'
     url_link = f"https://api.tiingo.com/tiingo/daily/{symbol}/prices"
     headers = {'Content-Type':'application/json'}
@@ -53,8 +70,7 @@ def company_datasets(symbol):
     data = respone.json()
     data = pd.DataFrame(data)
     if data.empty:
-        print(f"There is no information for symbol {symbol}")
-        return None
+        return data 
     data["Symbol"] = symbol
     data.to_parquet(filepath, index = False)
     return data
