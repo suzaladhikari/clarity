@@ -5,7 +5,15 @@ subprocess.run([sys.executable, 'src/data_pipeline/ingest.py'], check=True)
 subprocess.run([sys.executable, 'src/pipeline.py'], check=True)
 subprocess.run([sys.executable, 'src/training/train_xgboost.py'], check =True)
 subprocess.run([sys.executable, 'src/training/train_garch.py'], check =True)
-
+subprocess.run([
+    "jupyter",
+    "nbconvert",
+    "--to",
+    "notebook",
+    "--execute",
+    "--inplace",
+    "modelcomparisons.ipynb"
+], check=True)
 json_path = './modelperformance/'
 datasets = []
 for filename in os.listdir(json_path):
