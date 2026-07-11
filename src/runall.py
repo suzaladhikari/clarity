@@ -1,19 +1,21 @@
 import subprocess, json, os
 import sys
 import pandas as pd
-subprocess.run([sys.executable, 'src/data_pipeline/ingest.py'], check=True)
-subprocess.run([sys.executable, 'src/pipeline.py'], check=True)
-subprocess.run([sys.executable, 'src/training/train_xgboost.py'], check =True)
-subprocess.run([sys.executable, 'src/training/train_garch.py'], check =True)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # .../Clarity/src
+
+subprocess.run([sys.executable, os.path.join(BASE_DIR, 'data_pipeline', 'ingest.py')], check=True)
+subprocess.run([sys.executable, os.path.join(BASE_DIR, 'pipeline.py')], check=True)
+subprocess.run([sys.executable, os.path.join(BASE_DIR, 'training', 'train_xgboost.py')], check=True)
+subprocess.run([sys.executable, os.path.join(BASE_DIR, 'training', 'train_garch.py')], check=True)
+
+notebook_path = os.path.join(BASE_DIR, 'modelcomparisons.ipynb')  # adjust if it's actually elsewhere
 subprocess.run([
-    "jupyter",
-    "nbconvert",
-    "--to",
-    "notebook",
-    "--execute",
-    "--inplace",
-    "modelcomparisons.ipynb"
+    "jupyter", "nbconvert", "--to", "notebook",
+    "--execute", "--inplace",
+    notebook_path
 ], check=True)
+
+
 json_path = './modelperformance/'
 datasets = []
 for filename in os.listdir(json_path):
