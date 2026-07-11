@@ -11,7 +11,7 @@ from src.training.trainer_utils import model_train_and_validate, model_test
 def rnn_model(train_loader, validation_loader, test_loader):
     ## Setting up the device
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-    epochs = 30
+    epochs = 25
     saving_directory = 'models_saved/rnn/'
     checkpoint_dir = f"{saving_directory}rnn_best.pt"
     ## Taking the trainloader, validation loader and test loader to the device

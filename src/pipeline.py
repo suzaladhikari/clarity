@@ -25,7 +25,7 @@ for ticker in watchlist.keys():
 
 combined_stock_data = pd.concat(combined_data, ignore_index=True)
 combined_stock_data.to_parquet('./datas/combined_data.parquet')
-recent = combined_stock_data[combined_stock_data['date'] >= '2026-06-25']
+print(combined_stock_data['date'].max())
     ## Creating the sequences out of the combined datasets
 def lstm_rnn(combined_stock_data):
     X_train, y_train, X_val, y_val, X_test, y_test = train_test_val(combined_stock_data)
