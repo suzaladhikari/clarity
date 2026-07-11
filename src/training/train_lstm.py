@@ -12,7 +12,7 @@ def lstm_model(train_loader, validation_loader, test_loader):
     model = LSTM(16, 32)
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-    epochs = 20
+    epochs = 30
     saving_directory = 'models_saved/lstm/'
     model.to(device)
     ## Setting up the loss function and optimizer 
