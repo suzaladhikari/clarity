@@ -14,13 +14,6 @@ def lstm_model(train_loader, validation_loader, test_loader):
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     epochs = 20
     saving_directory = 'models_saved/lstm/'
-    checkpoint_dir = f"{saving_directory}lstm_best.pt"
-    ## Loading the saved directory only if it exists
-    if os.path.exists(checkpoint_dir):
-        checkpoint = torch.load(checkpoint_dir)
-        model.load_state_dict(checkpoint['model_state_dict'])
-    else: 
-        print("No Checkpoint found ")
     model.to(device)
     ## Setting up the loss function and optimizer 
     optimizer = torch.optim.Adam(model.parameters(), lr = 0.01)
@@ -42,3 +35,4 @@ def lstm_model(train_loader, validation_loader, test_loader):
     lstm_results['rmse'] = rmse
     lstm_results['r2'] = r2
     return lstm_results
+

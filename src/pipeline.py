@@ -12,6 +12,7 @@ from src.datasets.dataset_loader import creating_data_loaders
 from src.training.train_lstm import lstm_model
 from src.training.train_rnn import rnn_model 
 import json 
+import numpy as np 
 def extracting_to_final_data(key):
     correctedData = data_corrector(key)
     feature_engineering = feature_creation(correctedData)
@@ -24,6 +25,10 @@ for ticker in watchlist.keys():
 
 combined_stock_data = pd.concat(combined_data, ignore_index=True)
 combined_stock_data.to_parquet('./datas/combined_data.parquet')
+recent = combined_stock_data[combined_stock_data['date'] >= '2026-06-25']
+print(recent.describe())
+print(recent.isna().sum())
+print(np.isinf(recent.select_dtypes(include=[np.number])).sum())
 print(combined_stock_data['date'].max(), len(combined_stock_data))
     ## Creating the sequences out of the combined datasets
 def lstm_rnn(combined_stock_data):
@@ -51,7 +56,7 @@ def lstm_rnn(combined_stock_data):
     return combined_results
 
 lstm_rnn_results = lstm_rnn(combined_stock_data)
-print(lstm_rnn_results['predicted'])
+
 path = "./modelperformance/lstm_rnn_results.json"
 
 os.makedirs(os.path.dirname(path), exist_ok=True)
