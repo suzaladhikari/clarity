@@ -7,22 +7,17 @@ import torch.nn as nn
 from src.utils.initials import saving_pickle, loading_pickle
 from src.training.trainer_utils import model_train_and_validate, model_test
 
-## Setting up the device
-device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-epochs = 20
-saving_directory = 'models_saved/rnn/'
-checkpoint_dir = f"{saving_directory}rnn_best.pt"
-## Taking the trainloader, validation loader and test loader to the device
-## Setting up the model 
-model = RNN(16, 32)
 
 def rnn_model(train_loader, validation_loader, test_loader):
+    ## Setting up the device
+    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+    epochs = 20
+    saving_directory = 'models_saved/rnn/'
+    checkpoint_dir = f"{saving_directory}rnn_best.pt"
+    ## Taking the trainloader, validation loader and test loader to the device
+    ## Setting up the model 
+    model = RNN(16, 32)
 ## Loading the saved directory only if it exists
-    if os.path.exists(checkpoint_dir):
-        checkpoint = torch.load(checkpoint_dir)
-        model.load_state_dict(checkpoint['model_state_dict'])
-    else: 
-        print("No Checkpoint found ")
     model.to(device)
     ## Setting up the loss function and optimizer 
     optimizer = torch.optim.Adam(model.parameters(), lr = 0.01)
