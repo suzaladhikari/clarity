@@ -20,7 +20,7 @@ def rnn_model(train_loader, validation_loader, test_loader):
 ## Loading the saved directory only if it exists
     model.to(device)
     ## Setting up the loss function and optimizer 
-    optimizer = torch.optim.Adam(model.parameters(), lr = 0.01)
+    optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
     loss_function = nn.MSELoss()
 
     ## Getting the training and validation loss 
