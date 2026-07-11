@@ -36,7 +36,7 @@ def garch_model(data):
         full_returns = np.concatenate([train_result, test_result])
         full_variance = garch.computing_variance(full_returns)
         test_variance = full_variance[len(train_result):]
-        test_vol_pred = np.sqrt(test_variance)
+        test_vol_pred = np.sqrt(test_variance) /100 
 
 
         all_predictions.append(test_vol_pred)
