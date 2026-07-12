@@ -28,4 +28,8 @@ class PredictionRequest(BaseModel):
         if value not in model_list.keys():
             raise ValueError(f"{value} is not in the list of models we have. Choose from {list(model_list.keys())} we have")
 
-    
+
+class PredictedResponse(BaseModel):
+    ticker: str
+    predicted_volatility = str
+    model : str 
