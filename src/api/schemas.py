@@ -27,7 +27,7 @@ class PredictionRequest(BaseModel):
     def validate(cls, value):
         if value not in model_list.keys():
             raise ValueError(f"{value} is not in the list of models we have. Choose from {list(model_list.keys())} we have")
-
+        return value
 
 class PredictedResponse(BaseModel):
     ticker: str

@@ -1,3 +1,5 @@
+import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from fastapi import FastAPI 
 from src.api.routes import router
 app = FastAPI(title = "API for Clarity", description= "API for stock volatility prediction", version = "1.0.0")
