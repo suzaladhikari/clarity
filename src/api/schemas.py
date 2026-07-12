@@ -31,5 +31,5 @@ class PredictionRequest(BaseModel):
 
 class PredictedResponse(BaseModel):
     ticker: str
-    predicted_volatility = str
+    predicted_volatility : float
     model : str 
