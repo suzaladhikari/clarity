@@ -4,5 +4,7 @@ from fastapi import APIRouter
 from src.api.schemas import PredictionRequest, PredictedResponse
 router = APIRouter()
 
-print(PredictedResponse)
-print(PredictionRequest)
+@router.post("/predict", response_model = PredictedResponse)
+def predict(request: PredictionRequest):
+    result = predict_volatility(request.ticker, request.models)
+    return result 
