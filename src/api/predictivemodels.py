@@ -38,7 +38,8 @@ class XGBoostModel:
     def latest_data(self):
         data = pd.read_parquet('./datas/combined_data.parquet')
         ticker_data = data[data['Symbol'] == self.ticker].sort_values(by = "date")
-        
+        if ticker_data.empty:
+            raise ValueError(f"There is no data of symbol : {self.ticker}")    
         ## Extracting the last column of the data 
         latest_row = ticker_data.iloc[-1:]
         DROP_COLS = ['date', 'Symbol', 'target_volatility']
@@ -50,5 +51,3 @@ class XGBoostModel:
         pred = self.model.predict(x)
         return pred[0]
     
-xbg = XGBoostModel("AAPL")
-print(xbg.predict())
