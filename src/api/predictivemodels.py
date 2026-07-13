@@ -34,3 +34,8 @@ class XGBoostModel:
         self.ticker = ticker
         self.model = xgb.XGBRegressor()
         self.model.load_model('./models_saved/xgboost/xgboost_model.json')
+    
+    def latest_data(self):
+        data = pd.read_parquet('./datas/modelperformance.parquet')
+        ticker_data = data[data['Symbol'] == self.ticker].sort_values(by = "date")
+        
