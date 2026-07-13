@@ -1,4 +1,5 @@
 import numpy as np 
+import pandas as pd
 class Garch: 
     def __init__(self, omega, alpha, beta):
         self.omega = omega ## Even if nothing happened yesterday, volatility never goes ot zero. This isthe floor
@@ -18,4 +19,6 @@ class Garch:
         last_variance = variance[-1]
         next_day_variance = self.omega + self.alpha * last_return **2 + self.beta * last_variance
         return next_day_variance
+    
+
     

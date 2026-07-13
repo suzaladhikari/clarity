@@ -4,7 +4,7 @@ from src.training.train_garch import params_garch
 from src.models.garch import Garch
 import pandas as pd
 import numpy as np 
-
+import xgboost as xgb 
 ### GARCH MODEL 
 class GarchModel: 
     def __init__(self, ticker):
@@ -26,3 +26,10 @@ class GarchModel:
         next_day = model.forecast_next_day(returns, variance)
         next_day = np.sqrt(next_day) / 100
         return next_day
+
+
+### XGBoost Model 
+class XGBoostModel: 
+    def __init__(self, ticker):
+        self.ticker = ticker
+        self.model = xgb.XG
