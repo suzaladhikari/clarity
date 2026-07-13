@@ -38,4 +38,7 @@ class XGBoostModel:
     def latest_data(self):
         data = pd.read_parquet('./datas/modelperformance.parquet')
         ticker_data = data[data['Symbol'] == self.ticker].sort_values(by = "date")
-        
+        ## Extracting the last column of the data 
+        latest_row = ticker_data.iloc[-1:]
+        DROP_COLS = ['date', 'Symbol', 'target_volatility']
+        X = latest_row.drop(DROP_COLS)
