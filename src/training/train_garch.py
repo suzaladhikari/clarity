@@ -12,7 +12,7 @@ data = pd.read_parquet("./datas/combined_data.parquet")
 def garch_model(data):
     all_predictions = []
     all_true = []
-
+    symbol_params = {}
     for symbol, group in data.groupby('Symbol'):
         group = group.sort_values('date').reset_index(drop = True)
         train = group[group['date'] < '2022-01-01']
@@ -29,8 +29,9 @@ def garch_model(data):
         omega = results.params['omega']
         alpha = results.params['alpha[1]']
         beta = results.params['beta[1]']
-
-
+        symbol_params['omega'] = omega
+        symbol_params['alpha'] = alpha
+        symbol_params['beta'] = beta 
         ## Forecasting on test 
         garch = Garch(omega, alpha, beta)
         full_returns = np.concatenate([train_result, test_result])
@@ -58,9 +59,9 @@ def garch_model(data):
     garch_results['rmse'] = rmse
     garch_results['r2'] = r2
 
-    return garch_results
-
-garch_results = garch_model(data)
+    return garch_results, symbol_params
+results, params_garch = garch_model(data)
+garch_results = results
 
 path = "./modelperformance/garch_results.json"
 
