@@ -8,7 +8,7 @@ import xgboost as xgb
 ### GARCH MODEL 
 class GarchModel: 
     def __init__(self, ticker):
-        self.ticker = ticker
+        self.ticker = ticker.upper()
     def return_value_by_ticker(self, datapath = './datas/combined_data.parquet'):
         ticker_params = params_garch[self.ticker]
         omega, alpha, beta = ticker_params['omega'], ticker_params['alpha'], ticker_params['beta']
