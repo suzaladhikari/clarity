@@ -12,4 +12,9 @@ def return_value_by_ticker(ticker, datapath = './datas/combined_data.parquet'):
      returns = ticker_data['log_return'].values * 100 
      return returns 
 
-def predict_next_day_volatility(returns):
+def predict_next_day_volatility(returns, omega, alpha, beta):
+    model = Garch(omega, alpha, beta)
+    variance = model.computing_variance(returns)
+    next_day = model.forecast_next_day(returns, variance)
+
+    return next_day 
