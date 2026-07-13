@@ -32,4 +32,5 @@ class GarchModel:
 class XGBoostModel: 
     def __init__(self, ticker):
         self.ticker = ticker
-        self.model = xgb.XG
+        self.model = xgb.XGBRegressor()
+        self.model.load_model('./models_saved/xgboost/xgboost_model.json')
