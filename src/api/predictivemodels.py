@@ -27,13 +27,19 @@ class GarchModel:
         next_day = np.sqrt(next_day) / 100
         return next_day
 
-
 ### XGBoost Model 
 class XGBoostModel: 
     def __init__(self, ticker):
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+        model_path = os.path.join(
+            base_dir,
+            "models_saved",
+            "xgboost",
+            "xgboost_model.json"
+        )
         self.ticker = ticker.upper()
         self.model = xgb.XGBRegressor()
-        self.model.load_model('./models_saved/xgboost/xgboost_model.json')
+        self.model.load_model(model_path)
     
     def latest_data(self):
         data = pd.read_parquet('./datas/combined_data.parquet')
