@@ -51,3 +51,9 @@ class XGBoostModel:
         pred = self.model.predict(x)
         return pred[0]
     
+
+
+def predict_volatility(ticker:str, model:str):
+    if model == 'Garch':
+        return GarchModel(ticker).predict_next_day_volatility()
+    
