@@ -31,7 +31,7 @@ class GarchModel:
 ### XGBoost Model 
 class XGBoostModel: 
     def __init__(self, ticker):
-        self.ticker = ticker
+        self.ticker = ticker.upper()
         self.model = xgb.XGBRegressor()
         self.model.load_model('./models_saved/xgboost/xgboost_model.json')
     
@@ -56,4 +56,6 @@ class XGBoostModel:
 def predict_volatility(ticker:str, model:str):
     if model == 'garch':
         return GarchModel(ticker).predict_next_day_volatility()
-    
+    if model == 'xgboost':
+        return float(XGBoostModel(ticker).predict())
+

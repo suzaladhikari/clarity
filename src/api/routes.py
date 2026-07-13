@@ -13,3 +13,4 @@ def predict(request: PredictionRequest):
         "model": request.models,
         "predicted_volatility": result
     }
+
