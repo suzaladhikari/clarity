@@ -42,3 +42,9 @@ class XGBoostModel:
         latest_row = ticker_data.iloc[-1:]
         DROP_COLS = ['date', 'Symbol', 'target_volatility']
         X = latest_row.drop(DROP_COLS)
+        return X
+    
+    def predict(self):
+        x = self.latest_data()
+        pred = self.model.predict(x)
+        return pred[0]
