@@ -36,15 +36,19 @@ class XGBoostModel:
         self.model.load_model('./models_saved/xgboost/xgboost_model.json')
     
     def latest_data(self):
-        data = pd.read_parquet('./datas/modelperformance.parquet')
+        data = pd.read_parquet('./datas/combined_data.parquet')
         ticker_data = data[data['Symbol'] == self.ticker].sort_values(by = "date")
+        
         ## Extracting the last column of the data 
         latest_row = ticker_data.iloc[-1:]
         DROP_COLS = ['date', 'Symbol', 'target_volatility']
-        X = latest_row.drop(DROP_COLS)
+        X = latest_row.drop(columns=DROP_COLS)
         return X
     
     def predict(self):
         x = self.latest_data()
         pred = self.model.predict(x)
         return pred[0]
+    
+xbg = XGBoostModel("AAPL")
+print(xbg.predict())
