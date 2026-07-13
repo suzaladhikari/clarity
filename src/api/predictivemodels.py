@@ -3,7 +3,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")
 from src.training.train_garch import params_garch
 from src.models.garch import Garch
 import pandas as pd
-
+import numpy as np 
 
 def return_value_by_ticker(ticker, datapath = './datas/combined_data.parquet'):
      ticker_params = params_garch[ticker]
@@ -19,8 +19,8 @@ def predict_next_day_volatility(returns, omega, alpha, beta):
     model = Garch(omega, alpha, beta)
     variance = model.computing_variance(returns)
     next_day = model.forecast_next_day(returns, variance)
-
+    next_day = np.sqrt(next_day) / 100
     return next_day
-returns, omega, alpha, beta = return_value_by_ticker("NVIDIA")
+returns, omega, alpha, beta = return_value_by_ticker("MSFT")
 next_day = predict_next_day_volatility(returns, omega, alpha, beta)
 print(next_day)
