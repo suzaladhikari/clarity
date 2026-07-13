@@ -11,5 +11,5 @@ def predict(request: PredictionRequest):
     return {
         "ticker": request.ticker,
         "model": request.models,
-        "prediction": result
+        "predicted_volatility": result
     }
