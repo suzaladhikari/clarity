@@ -17,4 +17,7 @@ def predict_next_day_volatility(returns, omega, alpha, beta):
     variance = model.computing_variance(returns)
     next_day = model.forecast_next_day(returns, variance)
 
-    return next_day 
+    return next_day
+returns = return_value_by_ticker("NVIDIA")
+next_day = predict_next_day_volatility(returns, omega, alpha, beta)
+print(next_day)

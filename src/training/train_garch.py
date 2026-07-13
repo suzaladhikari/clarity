@@ -29,9 +29,7 @@ def garch_model(data):
         omega = results.params['omega']
         alpha = results.params['alpha[1]']
         beta = results.params['beta[1]']
-        symbol_params['omega'] = omega
-        symbol_params['alpha'] = alpha
-        symbol_params['beta'] = beta 
+        symbol_params[symbol] = {"omega": omega, "alpha": alpha, "beta": beta}
         ## Forecasting on test 
         garch = Garch(omega, alpha, beta)
         full_returns = np.concatenate([train_result, test_result])
