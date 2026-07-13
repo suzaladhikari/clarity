@@ -8,4 +8,8 @@ router = APIRouter()
 @router.post("/predict", response_model = PredictedResponse)
 def predict(request: PredictionRequest):
     result = predict_volatility(request.ticker, request.models)
-    return result 
+    return {
+        "ticker": request.ticker,
+        "model": request.models,
+        "prediction": result
+    }
