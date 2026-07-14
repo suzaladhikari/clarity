@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np 
 import xgboost as xgb 
 import json 
+import joblib
 ### GARCH MODEL 
 class GarchModel: 
     def __init__(self, ticker):
@@ -65,19 +66,27 @@ class XGBoostModel:
         return pred[0]
     
 
-class RNNModel: 
-    def __init__(self, ticker):
-        self.ticker = ticker
-    def loading_data(self):
-        path = f'./datas/processed/{self.ticker}.parquet'
-        data = pd.read_parquet(path)
-        print(train_test_val(feature_creation(data)))
+class SequenceCreater: 
+    def __init__(self, ticker, scaler):
+        self.ticker = ticker 
+        self.scaler = scaler
+        self.window = 30
+        self.data = pd.read_parquet(f'./datas/processed/{self.ticker}.parquet')
+    def creating_sequences(self):
+        featured_data = feature_creation(self.data, training=False)
+        columns_to_drop = ['close', 'high', 'low', 'open', 'volume', 'adjClose', 'adjHigh','adjLow', 'adjOpen', 'adjVolume', 'divCash', 'splitFactor','date', 'Symbol']
+        featured_data = featured_data.drop(columns = columns_to_drop)
+        columns = featured_data.columns
+        featured_data[columns] = scaler.transform(featured_data[columns])
+        print(featured_data.head(5))
 
 
 
 
+scaler = joblib.load('./models_saved/scaler.pkl')
 
-model = RNNModel("AAPL").loading_data()
+model = SequenceCreater("AAPL", scaler).creating_sequences()
+print(model)
 
 ### Based on the user's request 
 
