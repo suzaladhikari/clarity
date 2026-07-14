@@ -51,14 +51,22 @@ def garch_model(data):
     rmse = np.sqrt(mean_squared_error(all_true, all_predictions))
     r2 = r2_score(all_true, all_predictions)
 
+    path = "./modelperformance/garch_params.json"
+
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+
+    with open(path, "w") as f:
+        json.dump(symbol_params, f, indent=4)
+
+
     garch_results = {}
     garch_results['model'] = 'garch'
     garch_results['mae'] = mae
     garch_results['rmse'] = rmse
     garch_results['r2'] = r2
 
-    return garch_results, symbol_params
-results, params_garch = garch_model(data)
+    return garch_results
+results = garch_model(data)
 garch_results = results
 
 path = "./modelperformance/garch_results.json"
