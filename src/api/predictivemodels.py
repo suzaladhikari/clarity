@@ -71,12 +71,13 @@ class RNNModel:
     def loading_data(self):
         path = f'./datas/processed/{self.ticker}.parquet'
         data = pd.read_parquet(path)
-        print(train_test_val(data))
+        print(train_test_val(feature_creation(data)))
 
 
 
 
 
+model = RNNModel("AAPL").loading_data()
 
 ### Based on the user's request 
 

@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import os 
+import joblib
 ## Creating a combined datset 
 
 
@@ -26,7 +27,8 @@ def train_test_val(data):
     train_split[scalable_columns] = scaler.fit_transform(train_split[scalable_columns])
     validation_split[scalable_columns] = scaler.transform(validation_split[scalable_columns])
     test_split[scalable_columns] = scaler.transform(test_split[scalable_columns])
-
+    joblib.dump(scaler, "./models_saved/scaler.pkl")
+    
     ## Creating Sequences 
     def creating_sequences(data, scalable_columns, target_col = 'target_volatility', window = 30):
         X,y = [], []
