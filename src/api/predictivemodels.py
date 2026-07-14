@@ -46,11 +46,12 @@ class XGBoostModel:
     
     def latest_data(self):
 
-        path = f'/datas/processed/{self.ticker}.parquet'
-        data = pd.read_csv(path)
+        path = f'./datas/processed/{self.ticker}.parquet'
+        data = pd.read_parquet(path)
         featured_data = feature_creation(data, training=False)
         if featured_data.empty:
-            raise ValueError(f"There is no data of symbol : {self.ticker}")    
+            raise ValueError(f"There is no data of symbol : {self.ticker}")  
+        print(featured_data['date'].max())  
         ## Extracting the last column of the data 
         latest_row = featured_data.iloc[-1:]
         DROP_COLS = ['date', 'Symbol']
@@ -70,5 +71,5 @@ def predict_volatility(ticker:str, model:str):
     if model == 'xgboost':
         return float(XGBoostModel(ticker).predict())
 
-
-=
+model = XGBoostModel("AAPL").predict()
+print(model)
