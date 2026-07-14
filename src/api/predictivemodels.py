@@ -2,6 +2,7 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from src.models.garch import Garch
 from src.data_pipeline.featureengineering import feature_creation
+from src.datasets.sequence_builder import train_test_val
 import pandas as pd
 import numpy as np 
 import xgboost as xgb 
@@ -64,6 +65,20 @@ class XGBoostModel:
         return pred[0]
     
 
+class RNNModel: 
+    def __init__(self, ticker):
+        self.ticker = ticker
+    def loading_data(self):
+        path = f'./datas/processed/{self.ticker}.parquet'
+        data = pd.read_parquet(path)
+        print(train_test_val(data))
+
+
+
+
+
+
+### Based on the user's request 
 
 def predict_volatility(ticker:str, model:str):
     if model == 'garch':
