@@ -15,7 +15,7 @@ import json
 import numpy as np 
 def extracting_to_final_data(key):
     correctedData = data_corrector(key)
-    feature_engineering = feature_creation(correctedData)
+    feature_engineering = feature_creation(correctedData,training=True)
     return feature_engineering
 
 combined_data = []

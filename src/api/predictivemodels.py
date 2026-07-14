@@ -1,7 +1,7 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from src.training.train_garch import params_garch
 from src.models.garch import Garch
+from src.data_pipeline.featureengineering import feature_creation
 import pandas as pd
 import numpy as np 
 import xgboost as xgb 
@@ -11,7 +11,9 @@ class GarchModel:
     def __init__(self, ticker):
         self.ticker = ticker.upper()
     def return_value_by_ticker(self, datapath = './datas/combined_data.parquet'):
-        ticker_params = params_garch[self.ticker]
+        with open("./modelperformance/garch_params.json", "r") as f: 
+            data = json.load(f)
+        ticker_params = data[self.ticker]
         omega, alpha, beta = ticker_params['omega'], ticker_params['alpha'], ticker_params['beta']
         data = pd.read_parquet(datapath)
         ticker_data = data[data['Symbol'] == self.ticker].sort_values(by = 'date').reset_index(drop = True)
@@ -43,13 +45,15 @@ class XGBoostModel:
         self.model.load_model(model_path)
     
     def latest_data(self):
-        data = pd.read_parquet('./datas/combined_data.parquet')
-        ticker_data = data[data['Symbol'] == self.ticker].sort_values(by = "date")
-        if ticker_data.empty:
+
+        path = f'/datas/processed/{self.ticker}.parquet'
+        data = pd.read_csv(path)
+        featured_data = feature_creation(data, training=False)
+        if featured_data.empty:
             raise ValueError(f"There is no data of symbol : {self.ticker}")    
         ## Extracting the last column of the data 
-        latest_row = ticker_data.iloc[-1:]
-        DROP_COLS = ['date', 'Symbol', 'target_volatility']
+        latest_row = featured_data.iloc[-1:]
+        DROP_COLS = ['date', 'Symbol']
         X = latest_row.drop(columns=DROP_COLS)
         return X
     
@@ -66,3 +70,5 @@ def predict_volatility(ticker:str, model:str):
     if model == 'xgboost':
         return float(XGBoostModel(ticker).predict())
 
+
+=
