@@ -5,6 +5,7 @@ from src.models.garch import Garch
 import pandas as pd
 import numpy as np 
 import xgboost as xgb 
+import json 
 ### GARCH MODEL 
 class GarchModel: 
     def __init__(self, ticker):

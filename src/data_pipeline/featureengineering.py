@@ -21,6 +21,7 @@ sp5 = sp5.sort_index()
 def feature_creation(data):
     ## Creating the log return 
     data['date'] = pd.to_datetime(data['date']).dt.tz_localize(None)
+    print(data['date'].max())
     data = data.merge(sp5[['date','sp5_log_return', 'sp5_20_volatility', 'sp5_abs_return']], left_on = 'date', right_on = 'date', how= 'left')
     data['log_return'] = np.log(data['adjClose'] / data['adjClose'].shift(1)) ## Log returns 
     data['squared_log_returns'] = data['log_return'] ** 2
