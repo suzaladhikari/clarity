@@ -44,6 +44,7 @@ def company_datasets(symbol):
         if "Symbol" not in existing_data.columns:
             existing_data["Symbol"] = symbol
         last_date = pd.to_datetime(existing_data['date']).max()
+        print(last_date)
         start_date = (last_date + pd.Timedelta(days = 1)).strftime('%Y-%m-%d')
 
         if pd.to_datetime(start_date) > pd.Timestamp.today():
