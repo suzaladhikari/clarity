@@ -78,7 +78,8 @@ class SequenceCreater:
         featured_data = featured_data.drop(columns = columns_to_drop)
         columns = featured_data.columns
         featured_data[columns] = scaler.transform(featured_data[columns])
-        print(featured_data.head(5))
+        latest_sequence = featured_data[columns].tail(30).values
+        print(latest_sequence)
 
 
 
