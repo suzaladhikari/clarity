@@ -71,5 +71,3 @@ def predict_volatility(ticker:str, model:str):
     if model == 'xgboost':
         return float(XGBoostModel(ticker).predict())
 
-model = XGBoostModel("AAPL").predict()
-print(model)
