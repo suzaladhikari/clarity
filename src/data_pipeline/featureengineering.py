@@ -18,7 +18,7 @@ sp5['sp5_20_volatility'] = sp5['sp5_log_return'].rolling(20).std()
 sp5['sp5_abs_return'] = np.abs(sp5['sp5_log_return'])
 sp5 = sp5.sort_index()
 
-def feature_creation(data):
+def feature_creation(data, training = True):
     ## Creating the log return 
     data['date'] = pd.to_datetime(data['date']).dt.tz_localize(None)
     print(data['date'].max())
@@ -47,8 +47,8 @@ def feature_creation(data):
     data['excess_return'] = data['log_return'] - data['sp5_log_return']
     data['vol_ratio'] = data['rolling_vol_20'] / data['sp5_20_volatility']
     ## Label: next day volatility 
-    data['target_volatility'] = data['rolling_vol_5'].shift(-1)
-
+    if training: 
+        data['target_volatility'] = data['rolling_vol_5'].shift(-1)
     data = data.dropna()
     return data
 
