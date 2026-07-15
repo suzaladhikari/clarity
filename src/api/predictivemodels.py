@@ -126,7 +126,14 @@ def predict_volatility(ticker:str, model:str):
     
     if model == 'lstm':
         path = './models_saved/lstm/lstm_best.pt'
-        model = lstm()
+        model = lstm(path)
+        X = SequenceCreater(ticker, scaler).creating_sequences()
+        X = torch.tensor(X, dtype=torch.float32)
+        model.eval()
+        print(X.shape)
+        with torch.no_grad():
+            prediction = model(X)
+        return prediction.item()
 
 
 print(predict_volatility("AAPL", 'rnn'))
