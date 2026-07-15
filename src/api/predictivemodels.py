@@ -79,7 +79,9 @@ class SequenceCreater:
         columns = featured_data.columns
         featured_data[columns] = scaler.transform(featured_data[columns])
         latest_sequence = featured_data[columns].tail(30).values
-        print(latest_sequence)
+        X = np.expand_dims(latest_sequence, axis = 0)
+        return X 
+
 
 
 
