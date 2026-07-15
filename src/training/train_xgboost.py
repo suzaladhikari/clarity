@@ -67,3 +67,11 @@ os.makedirs(os.path.dirname(path), exist_ok=True)
 
 with open(path, "w") as f:
     json.dump(results, f, indent=4)
+
+
+
+import sklearn
+import xgboost
+
+print(sklearn.__version__)
+print(xgboost.__version__)

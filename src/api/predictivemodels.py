@@ -132,3 +132,9 @@ def predict_volatility(ticker:str, model:str):
         with torch.no_grad():
             prediction = model(X)
         return prediction.item()
+
+import sklearn
+import xgboost
+
+print(sklearn.__version__)
+print(xgboost.__version__)
