@@ -83,6 +83,7 @@ class SequenceCreater:
         featured_data[columns] = scaler.transform(featured_data[columns])
         latest_sequence = featured_data[columns].tail(30).values ### To get the last window of 30 to predict next value
         X = np.expand_dims(latest_sequence, axis = 0)
+        X = torch.tensor(X, dtype=torch.float32)
         return X 
 
 
