@@ -8,6 +8,8 @@ import numpy as np
 import xgboost as xgb 
 import json 
 import joblib
+import torch.nn as nn 
+import torch 
 ### GARCH MODEL 
 class GarchModel: 
     def __init__(self, ticker):
@@ -89,8 +91,13 @@ class SequenceCreater:
 scaler = joblib.load('./models_saved/scaler.pkl')
 
 model = SequenceCreater("AAPL", scaler).creating_sequences()
-print(model)
 
+### Creating the RNN model 
+def rnn(state_dict_path):
+    model = nn.RNN(input_size=16,hidden_size=64)
+    model_dict = torch.load(state_dict_path)
+    model.load_state_dict(model_dict['model_state_dict'])
+    return model
 ### Based on the user's request 
 
 def predict_volatility(ticker:str, model:str):
@@ -98,4 +105,10 @@ def predict_volatility(ticker:str, model:str):
         return GarchModel(ticker).predict_next_day_volatility()
     if model == 'xgboost':
         return float(XGBoostModel(ticker).predict())
+    if model == 'rnn':
+        model = rnn('./models_saved/rnn/rnn_best.pt')
+        X = SequenceCreater(ticker).creating_sequences()
+        with torch.no_grad():
+            prediction = model(X)
+        return prediction
 
