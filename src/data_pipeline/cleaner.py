@@ -10,10 +10,13 @@ sys.path.append(
 import pandas as pd 
 import numpy as np 
 from src.data_pipeline.ingest import watchlist, market
-
+BASE_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../..")
+)
+print(BASE_DIR)
 def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan data types
-    path = os.path.join("datas", "raw")
-    saving_path = os.path.join("datas", "processed")
+    path = os.path.join(BASE_DIR, "datas", "raw")
+    saving_path = os.path.join(BASE_DIR, "datas", "processed")
     filepath = os.path.join(path, f"{symbol}.parquet")
     savingname = os.path.join(saving_path, f"{symbol}.parquet")
     if not os.path.exists(filepath): ## If there is no such file
