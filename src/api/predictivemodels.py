@@ -109,7 +109,7 @@ def predict_volatility(ticker:str, model:str):
     if model == 'rnn':
         path = './models_saved/rnn/rnn_best.pt'
         model = rnn(path)
-        X = SequenceCreater(ticker).creating_sequences()
+        X = SequenceCreater(ticker, scaler).creating_sequences()
         with torch.no_grad():
             prediction = model(X)
         return prediction
