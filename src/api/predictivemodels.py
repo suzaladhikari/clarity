@@ -11,6 +11,7 @@ import joblib
 import torch.nn as nn 
 import torch 
 from src.models.rnn import RNN
+from src.models.lstm import LSTM 
 ### GARCH MODEL 
 class GarchModel: 
     def __init__(self, ticker):
@@ -101,6 +102,12 @@ def rnn(state_dict_path):
     return model
 ### Based on the user's request 
 
+def lstm(state_dict_path):
+    model = LSTM(state_dict_path)
+    model_dict = torch.load(state_dict_path)
+    model.load_state_dict(model_dict['model_state_dict'])
+    return model 
+
 def predict_volatility(ticker:str, model:str):
     if model == 'garch':
         return GarchModel(ticker).predict_next_day_volatility()
@@ -116,6 +123,10 @@ def predict_volatility(ticker:str, model:str):
         with torch.no_grad():
             prediction = model(X)
         return prediction.item()
+    
+    if model == 'lstm':
+        path = './models_saved/lstm/lstm_best.pt'
+        model = lstm()
 
 
 print(predict_volatility("AAPL", 'rnn'))
