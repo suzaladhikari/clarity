@@ -103,7 +103,7 @@ def rnn(state_dict_path):
 ### Based on the user's request 
 
 def lstm(state_dict_path):
-    model = LSTM(state_dict_path)
+    model = LSTM(input_size=16,hidden_state=32)
     model_dict = torch.load(state_dict_path)
     model.load_state_dict(model_dict['model_state_dict'])
     return model 
@@ -119,7 +119,6 @@ def predict_volatility(ticker:str, model:str):
         X = SequenceCreater(ticker, scaler).creating_sequences()
         X = torch.tensor(X, dtype=torch.float32)
         model.eval()
-        print(X.shape)
         with torch.no_grad():
             prediction = model(X)
         return prediction.item()
@@ -130,10 +129,9 @@ def predict_volatility(ticker:str, model:str):
         X = SequenceCreater(ticker, scaler).creating_sequences()
         X = torch.tensor(X, dtype=torch.float32)
         model.eval()
-        print(X.shape)
         with torch.no_grad():
             prediction = model(X)
         return prediction.item()
 
 
-print(predict_volatility("AAPL", 'rnn'))
+print(predict_volatility("AAPL", 'lstm'))
