@@ -133,8 +133,9 @@ def predict_volatility(ticker:str, model:str):
             prediction = model(X)
         return prediction.item()
 
+
 import sklearn
 import xgboost
 
-print(sklearn.__version__)
-print(xgboost.__version__)
+print("SKLEARN VERSION:", sklearn.__version__)
+print("XGBOOST VERSION:", xgboost.__version__)
