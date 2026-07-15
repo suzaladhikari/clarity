@@ -11,7 +11,18 @@ from src.data_pipeline.cleaner import watchlist
 ### Here we will be creating new features 
 
 ### S & P 500 
-sp5 = pd.read_parquet('/Users/sujaladhikari/sujalpersonal/Projects/Clarity/datas/processed/SPY.parquet')
+BASE_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../..")
+)
+
+# S&P 500 path
+SP5_PATH = os.path.join(
+    BASE_DIR,
+    "datas",
+    "processed",
+    "SPY.parquet"
+)
+sp5 = pd.read_parquet(SP5_PATH)
 sp5['date'] = pd.to_datetime(sp5['date']).dt.tz_localize(None)
 sp5['sp5_log_return'] = np.log(sp5['adjClose'] / sp5['adjClose'].shift(1))
 sp5['sp5_20_volatility'] = sp5['sp5_log_return'].rolling(20).std()
