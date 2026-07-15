@@ -83,7 +83,6 @@ class SequenceCreater:
         featured_data[columns] = scaler.transform(featured_data[columns])
         latest_sequence = featured_data[columns].tail(30).values ### To get the last window of 30 to predict next value
         X = np.expand_dims(latest_sequence, axis = 0)
-        X = torch.tensor(X, dtype=torch.float32)
         return X 
 
 
@@ -111,9 +110,12 @@ def predict_volatility(ticker:str, model:str):
         path = './models_saved/rnn/rnn_best.pt'
         model = rnn(path)
         X = SequenceCreater(ticker, scaler).creating_sequences()
+        X = torch.tensor(X, dtype=torch.float32)
+        model.eval()
+        print(X.shape)
         with torch.no_grad():
             prediction = model(X)
-        return prediction
+        return prediction.item()
 
 
 print(predict_volatility("AAPL", 'rnn'))
