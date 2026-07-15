@@ -97,14 +97,14 @@ model = SequenceCreater("AAPL", scaler).creating_sequences()
 ### Creating the RNN model 
 def rnn(state_dict_path):
     model = RNN(input_size=16,hidden_size=32)
-    model_dict = torch.load(state_dict_path)
+    model_dict = torch.load(state_dict_path, map_location="cpu")
     model.load_state_dict(model_dict['model_state_dict'])
     return model
 ### Based on the user's request 
 
 def lstm(state_dict_path):
     model = LSTM(input_size=16,hidden_state=32)
-    model_dict = torch.load(state_dict_path)
+    model_dict = torch.load(state_dict_path, map_location="cpu")
     model.load_state_dict(model_dict['model_state_dict'])
     return model 
 
@@ -132,6 +132,3 @@ def predict_volatility(ticker:str, model:str):
         with torch.no_grad():
             prediction = model(X)
         return prediction.item()
-
-
-print(predict_volatility("AAPL", 'lstm'))
