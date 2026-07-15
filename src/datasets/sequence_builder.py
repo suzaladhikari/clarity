@@ -13,7 +13,7 @@ import joblib
 
 ## Dropping the unnecessary columns 
 def train_test_val(data):
-    columns_to_drop = ['close', 'high', 'low', 'open', 'volume', 'adjClose', 'adjHigh','adjLow', 'adjOpen', 'adjVolume', 'divCash', 'splitFactor',]
+    columns_to_drop = ['close', 'high', 'low', 'open', 'volume', 'adjClose', 'adjHigh','adjLow', 'adjOpen', 'adjVolume', 'divCash', 'splitFactor']
     combined_stock_data = data.drop(columns = columns_to_drop)
     ## Doing the train, validation and test split with the date
     train_split = combined_stock_data[combined_stock_data['date'] < '2020-01-01'].copy()
@@ -28,7 +28,7 @@ def train_test_val(data):
     validation_split[scalable_columns] = scaler.transform(validation_split[scalable_columns])
     test_split[scalable_columns] = scaler.transform(test_split[scalable_columns])
     joblib.dump(scaler, "./models_saved/scaler.pkl")
-    
+
     ## Creating Sequences 
     def creating_sequences(data, scalable_columns, target_col = 'target_volatility', window = 30):
         X,y = [], []

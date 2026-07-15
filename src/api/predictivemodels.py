@@ -10,6 +10,7 @@ import json
 import joblib
 import torch.nn as nn 
 import torch 
+from src.models.rnn import RNN
 ### GARCH MODEL 
 class GarchModel: 
     def __init__(self, ticker):
@@ -80,7 +81,7 @@ class SequenceCreater:
         featured_data = featured_data.drop(columns = columns_to_drop)
         columns = featured_data.columns
         featured_data[columns] = scaler.transform(featured_data[columns])
-        latest_sequence = featured_data[columns].tail(30).values
+        latest_sequence = featured_data[columns].tail(30).values ### To get the last window of 30 to predict next value
         X = np.expand_dims(latest_sequence, axis = 0)
         return X 
 
@@ -94,7 +95,7 @@ model = SequenceCreater("AAPL", scaler).creating_sequences()
 
 ### Creating the RNN model 
 def rnn(state_dict_path):
-    model = nn.RNN(input_size=16,hidden_size=64)
+    model = RNN(input_size=16,hidden_size=32)
     model_dict = torch.load(state_dict_path)
     model.load_state_dict(model_dict['model_state_dict'])
     return model
@@ -106,9 +107,12 @@ def predict_volatility(ticker:str, model:str):
     if model == 'xgboost':
         return float(XGBoostModel(ticker).predict())
     if model == 'rnn':
-        model = rnn('./models_saved/rnn/rnn_best.pt')
+        path = './models_saved/rnn/rnn_best.pt'
+        model = rnn(path)
         X = SequenceCreater(ticker).creating_sequences()
         with torch.no_grad():
             prediction = model(X)
         return prediction
 
+
+print(predict_volatility("AAPL", 'rnn'))
