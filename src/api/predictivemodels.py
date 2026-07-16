@@ -94,7 +94,7 @@ class SequenceCreater:
 scaler = joblib.load('./models_saved/scaler.pkl')
 
 model = SequenceCreater("AAPL", scaler)
-print(model)
+
 
 ### Creating the RNN model 
 def rnn(state_dict_path):
