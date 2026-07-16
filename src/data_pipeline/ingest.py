@@ -44,7 +44,6 @@ def company_datasets(symbol):
             existing_data["Symbol"] = symbol
         last_date = pd.to_datetime(existing_data['date']).max()
         start_date = (last_date + pd.Timedelta(days = 1)).strftime('%Y-%m-%d')
-
         if pd.to_datetime(start_date) > pd.Timestamp.today():
             return existing_data
         API_KEY = '8e14d5babfe29c8815f268eb1afa1727ce18f16e'

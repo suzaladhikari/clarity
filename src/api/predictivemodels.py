@@ -76,6 +76,7 @@ class SequenceCreater:
         self.scaler = scaler
         self.window = 30
         self.data = pd.read_parquet(f'./datas/processed/{self.ticker}.parquet')
+        print(self.data['date'].max())
     def creating_sequences(self):
         featured_data = feature_creation(self.data, training=False)
         columns_to_drop = ['close', 'high', 'low', 'open', 'volume', 'adjClose', 'adjHigh','adjLow', 'adjOpen', 'adjVolume', 'divCash', 'splitFactor','date', 'Symbol']
@@ -92,7 +93,8 @@ class SequenceCreater:
 
 scaler = joblib.load('./models_saved/scaler.pkl')
 
-model = SequenceCreater("AAPL", scaler).creating_sequences()
+model = SequenceCreater("AAPL", scaler)
+print(model)
 
 ### Creating the RNN model 
 def rnn(state_dict_path):
@@ -134,8 +136,5 @@ def predict_volatility(ticker:str, model:str):
         return prediction.item()
 
 
-import sklearn
-import xgboost
 
-print("SKLEARN VERSION:", sklearn.__version__)
-print("XGBOOST VERSION:", xgboost.__version__)
+

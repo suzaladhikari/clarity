@@ -13,7 +13,6 @@ from src.data_pipeline.ingest import watchlist, market
 BASE_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "../..")
 )
-print(BASE_DIR)
 def data_corrector(symbol): ## Data Corrector function ot detect invalid and nan data types
     path = os.path.join(BASE_DIR, "datas", "raw")
     saving_path = os.path.join(BASE_DIR, "datas", "processed")
