@@ -20,18 +20,32 @@ model = st.selectbox("", ['XGBoost', 'Garch', 'LSTM', 'RNN'])
 st.divider()
 
 st.write("Click the button below to predict volatility for the next day!")
-API_URL = os.getenv("API_URL", "https://clarity-yqh7.onrender.com/")
+API_URL = os.getenv("API_URL", "https://clarity-yqh7.onrender.com")
 payload = {
-    "ticker": ticker,
-    "models": model
+    "ticker": ticker.upper(),
+    "models": model.lower()
 }
 if st.button("Predict"):
-    try: 
-        response = requests.post(f"{API_URL}/predict", json=payload)
+    try:
+        response = requests.post(
+            f"{API_URL}/predict",
+            json=payload
+        )
+
         if response.status_code == 200:
             result = response.json()
-            st.success(result['predicted_volatility'])
+
+            st.success("Prediction Complete")
+
+            st.write(f"Ticker: {result['ticker']}")
+            st.write(f"Model: {result['model'].upper()}")
+            st.metric(
+                "Predicted Volatility",
+                f"{result['predicted_volatility']:.4f}"
+            )
+
         else:
-            st.error(f"Oopsie! Something went wrong ({response.status_code})")
+            st.error(f"{response.status_code}: {response.text}")
+
     except Exception as e:
-        st.error(f"Error connecting to API: {e}")       
+        st.error(f"Error connecting to API: {e}")      
