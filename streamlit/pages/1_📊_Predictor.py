@@ -10,7 +10,13 @@ st.markdown("**Supported Tickers:** `AAPL` • `MSFT` • `NVDA` • `GOOGL` •
 
 st.divider()
 
+st.subheader("Select a ticker")
 ticker = st.selectbox(
-    "Choose a ticker",
+    "",
     ["AAPL", "MSFT", "NVDA", "GOOGL", "AMD", "META", "TSLA", "NFLX", "LLY", "AVGO", "MU", "QCOM", "UNH", "WMT", "MA", "JNJ", "PG", "HD", "ORCL", "JPM"]
 )
+st.subheader("Select the model")
+model = st.selectbox("", ['XGBoost', 'Garch', 'LSTM', 'RNN'])
+st.divider()
+
+st.write("Click the button below to predict volatility for the next day!")
