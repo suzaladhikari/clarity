@@ -18,6 +18,6 @@ st.subheader("Volatilty is not a side stat - its the metric a lot of financial c
 
 st.header("What's under the hood?")
 st.subheader("Clarity benchmarks four different approaches on real data across 20 large-cap stocks plus the S&P 500")
-st.title("GARCH: The traditional statistical model that assumes that the volatility remebers yesterday and reacts the same way to good news and bad news")
-st.title("A gradient-boosted tree model")
-st.title("Deep learning models built up on longer, more complex patterns the GARCH's maths cannot see.")
+st.write("GARCH: The traditional statistical model that assumes that the volatility remebers yesterday and reacts the same way to good news and bad news")
+st.write("XGBoost: A gradient-boosted tree model")
+st.write("LSTM and RNN: Deep learning models built up on longer, more complex patterns the GARCH's maths cannot see.")
