@@ -1,11 +1,4 @@
 
 import streamlit as st
 
-st.title("📊 Dashboard")
-
-ticker = st.selectbox(
-    "Select Stock",
-    ["AAPL", "MSFT", "TSLA"]
-)
-
-st.write(f"Prediction for {ticker}")
+st.header("Here you can predict the volatility for the next day using either of the four models: XGBoost (best peforming), LSTM, RNN, and Garch")
