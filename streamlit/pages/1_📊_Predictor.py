@@ -28,3 +28,10 @@ payload = {
 if st.button("Predict"):
     try: 
         response = requests.post(f"{API_URL}/predict", json=payload)
+        if response.status_code == 200:
+            result = response.json()
+            st.success(result['predicted_volatility'])
+        else:
+            st.error("Oopsie! Something went wrong", response.status_code)
+    except Exception as e:
+        st.error(f"Error connecting to API: {e}")       
