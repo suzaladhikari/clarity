@@ -7,6 +7,6 @@ st.header("What is Clarity")
 #     page_icon="📈",
 #     layout="wide"
 # )
-st.subheader("What Clarity does is simple, it predicts how the market moves tomorrow. What it doesnot is predicting the prices which is nearly impossible to do by any man made models")
+st.subheader("Clarity does not try to predict where the market goes tomorow. What it predicts is how much is the stock likely to swing, in either direction. That's volatility and unlike the price detection it's actually forecastable")
 
 
