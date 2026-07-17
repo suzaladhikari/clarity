@@ -21,5 +21,10 @@ st.divider()
 
 st.write("Click the button below to predict volatility for the next day!")
 API_URL = os.getenv("API_URL", "https://clarity-yqh7.onrender.com/")
+payload = {
+    "ticker": ticker,
+    "models": model
+}
 if st.button("Predict"):
-    st.title(API_URL)
+    try: 
+        response = requests.post(f"{API_URL}/predict", json=payload)
