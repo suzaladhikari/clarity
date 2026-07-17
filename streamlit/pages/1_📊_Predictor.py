@@ -32,6 +32,6 @@ if st.button("Predict"):
             result = response.json()
             st.success(result['predicted_volatility'])
         else:
-            st.error("Oopsie! Something went wrong", response.status_code)
+            st.error(f"Oopsie! Something went wrong ({response.status_code})")
     except Exception as e:
         st.error(f"Error connecting to API: {e}")       
