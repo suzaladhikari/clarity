@@ -5,8 +5,9 @@ import seaborn as sns
 st.title("Analysis of the models")
 st.header("Evaluation One: MAE(Mean Absolute Error), RMSE(Root Mean Squared Error)")
 model_performance_data = pd.read_parquet("./datas/modelpeformance.parquet")
-### Comparison of model's performance
 
+### Comparison of model's performance
+st.write(model_performance_data.head(5))
 fig, ax = plt.subplots(1,2,figsize = (15,10))
 def plottingmetrics(x,y, data, title, xlabel, ylabel, ylim1, ylim2, axes):
     sns.barplot(x = x, y =y, data = data, hue = x, ax = axes)
@@ -23,4 +24,24 @@ plt.tight_layout()
 st.pyplot(fig)
 
 st.subheader("Comparison of MAE Scores (Left)")
-st.subheader("XGBoost achieves the best (lowest) performance with an MAE of 0.0043, followed by rnn with an MAE of 0.0046. LSTM performs similar to the RNN with an MAE of 0.0047. Garch has the highest error by a significant margin, coming in at 0.0066")
+mae = model_performance_data.set_index("model")["mae"]
+
+st.write(
+    f"""
+XGBoost achieves the best (lowest) performance with an MAE of **{mae['xgboost']:.4f}**, followed by
+RNN (**{mae['rnn']:.4f}**). LSTM performs similarly (**{mae['lstm']:.4f}**), while
+GARCH has the highest error (**{mae['garch']:.4f}**).
+"""
+)
+
+st.subheader("Comparison of RMSE Scores (Right)")
+rmse = model_performance_data.set_index("model")["rmse"]
+
+st.write(
+    f"""
+XGBoost achieves the best (lowest) performance with an RMSE of **{rmse['xgboost']:.4f}**, followed by
+RNN with an RMSE of **{rmse['rnn']:.4f}**. LSTM performs similarly to the RNN with an RMSE of
+**{rmse['lstm']:.4f}**. GARCH has the highest error by a significant margin, coming in at
+**{rmse['garch']:.4f}**.
+"""
+)
