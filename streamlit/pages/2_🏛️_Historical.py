@@ -22,7 +22,7 @@ plottingmetrics('model', 'rmse', model_performance_data, 'Comparison of RMSE Sco
 plt.tight_layout()
 st.pyplot(fig)
 
-st.subheader("Comparison of MAE and RMSE Scores (Left)")
+st.subheader("Comparison of MAE Scores (Left)")
 mae = model_performance_data.set_index("model")["mae"]
 
 st.write(
@@ -46,7 +46,7 @@ RNN with an RMSE of **{rmse['rnn']:.4f}**. LSTM performs similarly to the RNN wi
 )
 
 st.divider()
-st.subheader("Comparison of R2 Scores")
+st.header("Evaluation Two: R2 Scores")
 
 r2 = model_performance_data.set_index("model")["r2"]
 
