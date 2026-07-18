@@ -23,4 +23,4 @@ plt.tight_layout()
 st.pyplot(fig)
 
 st.subheader("Comparison of MAE Scores (Left)")
-
+st.subheader("XGBoost achieves the best (lowest) performance with an MAE of 0.0043, followed by rnn with an MAE of 0.0046. LSTM performs similar to the RNN with an MAE of 0.0047. Garch has the highest error by a significant margin, coming in at 0.0066")
