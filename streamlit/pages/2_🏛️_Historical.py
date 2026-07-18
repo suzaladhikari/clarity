@@ -45,9 +45,29 @@ RNN with an RMSE of **{rmse['rnn']:.4f}**. LSTM performs similarly to the RNN wi
 """
 )
 
-st.subheader("Comparison of R2 Scores (Right)")
+st.divider()
+st.subheader("Comparison of R2 Scores")
 
 r2 = model_performance_data.set_index("model")["r2"]
+
+fig, ax = plt.subplots(figsize=(8, 5))
+
+sns.barplot(
+    x="model",
+    y="r2",
+    data=model_performance_data,
+    ax=ax
+)
+
+ax.set_xlabel("Models")
+ax.set_ylabel("R² Score")
+ax.set_ylim(0, 1.05)
+ax.set_title("Comparison of R² Scores Across Models")
+
+for container in ax.containers:
+    ax.bar_label(container, fmt="%.3f", padding=3)
+
+st.pyplot(fig)
 
 st.write(
     f"""
