@@ -58,6 +58,7 @@ def garch_model(data):
     with open(path, "w") as f:
         json.dump(symbol_params, f, indent=4)
     testing_accuracies = {}
+    testing_accuracies['model'] = 'garch' 
     testing_accuracies['true_values'] = all_predictions
     garch_results = {}
     garch_results['model'] = 'garch'
