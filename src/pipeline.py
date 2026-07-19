@@ -34,6 +34,16 @@ def lstm_rnn(combined_stock_data):
         ## Models 
     lstm_model_results = lstm_model(train_loader, validation_loader, test_loader)
     rnn_model_results = rnn_model(train_loader, validation_loader, test_loader)  
+    combined_testing_results = [
+        {
+            "model": 'lstm',
+            "predicted": lstm_model_results['predicted']
+        },
+        {
+            "model":"rnn",
+            "predicted": rnn_model_results['predicted']
+        }
+    ]
     combined_results = [
         {
             "model": "lstm",
@@ -49,9 +59,9 @@ def lstm_rnn(combined_stock_data):
         },
     ]
 
-    return combined_results
+    return combined_results, combined_testing_results
 
-lstm_rnn_results = lstm_rnn(combined_stock_data)
+lstm_rnn_results, combined_results = lstm_rnn(combined_stock_data)
 
 path = "./modelperformance/lstm_rnn_results.json"
 
@@ -59,3 +69,10 @@ os.makedirs(os.path.dirname(path), exist_ok=True)
 
 with open(path, "w") as f:
     json.dump(lstm_rnn_results, f, indent=4)
+
+
+testing_path = "./modelperformance/garch_predicted.json"
+os.makedirs(os.path.dirname(testing_path), exist_ok=True)
+
+with open(testing_path, "w") as f:
+    json.dump(combined_results, f, indent=4)
