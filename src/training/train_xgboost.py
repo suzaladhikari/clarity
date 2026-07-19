@@ -50,16 +50,17 @@ def xgboost_model(combined_stock_data):
     model.fit(X_train,y_train, eval_set = [(X_val, y_val)], verbose = 30)
     saving_model(model)
     y_pred, rmse, mae,r2, true_values= evaluate_model(model, X_test, y_test)
-
+    testing_accuracies = {}
+    testing_accuracies['true_values'] = true_values
     xgboost_results = {}
     xgboost_results['model'] = 'xgboost'
     xgboost_results['mae'] = mae
     xgboost_results['rmse'] = rmse
     xgboost_results['r2'] = r2
 
-    return xgboost_results
+    return xgboost_results,testing_accuracies
 
-results = xgboost_model(data)
+results,testing_accuracies= xgboost_model(data)
 
 print(results)
 path = "./modelperformance/xgboost_results.json"
@@ -68,10 +69,8 @@ os.makedirs(os.path.dirname(path), exist_ok=True)
 with open(path, "w") as f:
     json.dump(results, f, indent=4)
 
+testing_path = "./modelperformance/xbgoost_predicted.json"
+os.makedirs(os.path.dirname(testing_path), exist_ok=True)
 
-
-import sklearn
-import xgboost
-
-print(sklearn.__version__)
-print(xgboost.__version__)
+with open(testing_path, "w") as f:
+    json.dump(testing_accuracies, f, indent=4)

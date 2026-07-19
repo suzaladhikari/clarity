@@ -80,3 +80,17 @@ st.write(
 **GARCH ({r2['garch']:.3f})**: The statistical GARCH model lags significantly behind the machine learning approaches, explaining only **{r2['garch']*100:.1f}%** of the variance.
 """
 )
+
+alex = pd.read_parquet("./datas/combined_data.parquet")
+
+simran = alex[alex['date'] >= '2022-01-01']
+st.write(simran['date'].dtype)
+fig, ax = plt.subplots(figsize=(12, 5))
+sns.scatterplot(
+    x="date",
+    y="target_volatility",
+    data=simran,
+    ax=ax
+)
+
+st.pyplot(fig)
