@@ -57,16 +57,16 @@ def garch_model(data):
 
     with open(path, "w") as f:
         json.dump(symbol_params, f, indent=4)
-
-
+    testing_accuracies = {}
+    testing_accuracies['true_values'] = all_predictions
     garch_results = {}
     garch_results['model'] = 'garch'
     garch_results['mae'] = mae
     garch_results['rmse'] = rmse
     garch_results['r2'] = r2
 
-    return garch_results
-results = garch_model(data)
+    return garch_results, testing_accuracies
+results,testing_accuracies = garch_model(data)
 garch_results = results
 
 path = "./modelperformance/garch_results.json"
@@ -75,3 +75,10 @@ os.makedirs(os.path.dirname(path), exist_ok=True)
 
 with open(path, "w") as f:
     json.dump(garch_results, f, indent=4)
+
+
+testing_path = "./modelperformance/garch_predicted.json"
+os.makedirs(os.path.dirname(testing_path), exist_ok=True)
+
+with open(testing_path, "w") as f:
+    json.dump(testing_accuracies, f, indent=4)
