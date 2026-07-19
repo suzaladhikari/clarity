@@ -61,7 +61,7 @@ def lstm_rnn(combined_stock_data):
 
     return combined_results, combined_testing_results
 
-lstm_rnn_results, combined_results = lstm_rnn(combined_stock_data)
+lstm_rnn_results, combined_testing_results = lstm_rnn(combined_stock_data)
 
 path = "./modelperformance/lstm_rnn_results.json"
 
@@ -71,8 +71,8 @@ with open(path, "w") as f:
     json.dump(lstm_rnn_results, f, indent=4)
 
 
-testing_path = "./modelperformance/garch_predicted.json"
+testing_path = "./modelperformance/lstm_rnn_predicted.json"
 os.makedirs(os.path.dirname(testing_path), exist_ok=True)
 
 with open(testing_path, "w") as f:
-    json.dump(combined_results, f, indent=4)
+    json.dump(combined_testing_results, f, indent=4)
