@@ -37,11 +37,11 @@ def lstm_rnn(combined_stock_data):
     combined_testing_results = [
         {
             "model": 'lstm',
-            "predicted": lstm_model_results['predicted'].detach().cpu().tolist()
+            "predicted": lstm_model_results['predicted']
         },
         {
             "model":"rnn",
-            "predicted": rnn_model_results['predicted'].detach().cpu().tolist()
+            "predicted": rnn_model_results['predicted']
         }
     ]
     combined_results = [

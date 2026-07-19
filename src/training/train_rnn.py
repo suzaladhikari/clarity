@@ -33,8 +33,8 @@ def rnn_model(train_loader, validation_loader, test_loader):
     print(f"Test Loss {testing_loss}, validatiion_loss ->{validation_loss[-1]}, t{training_loss[-1]}, MAE:{mae}, RMSE:{rmse}, r2:{r2}")
 
     rnn_results = {}
-    rnn_results['true_values'] = true_values
-    rnn_results['predicted'] = predicted
+    rnn_results['true_values'] = (true_values.detach().cpu().tolist() if torch.is_tensor(true_values) else true_values)
+    rnn_results['predicted'] = (predicted.detach().cpu().tolist() if torch.is_tensor(predicted) else predicted)
     rnn_results['mae'] = mae
     rnn_results['rmse'] = rmse
     rnn_results['r2'] = r2
