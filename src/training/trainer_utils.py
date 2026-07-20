@@ -65,14 +65,14 @@ def model_test(model, test_loader, loss_method, device):
             samples = samples.to(device)
             features = features.to(device)
             output = model(samples)
-            predicted.append(output.detach().cpu().numpy())
+            predicted.append(output)
             loss = loss_method(output, features)
             test_loss += loss.item()
-            true_values.append(features.detach().cpu().numpy())
+            true_values.append(features)
         testing_loss = test_loss/len(test_loader)
-        predicted_flat = np.concatenate(predicted).flatten().tolist()
-        true_values_flat = np.concatenate(true_values).flatten().tolist()
         mae, rmse, r2 = deep_evaluation(predicted, true_values)
+        predicted_flat = np.concatenate(predicted).detach().cpu().numpy().flatten().tolist()
+        true_values_flat = np.concatenate(true_values).detach().cpu().numpy().flatten().tolist()
         return testing_loss, true_values_flat, predicted_flat, mae, rmse, r2
     
 
