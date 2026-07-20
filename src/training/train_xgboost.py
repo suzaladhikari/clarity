@@ -52,7 +52,7 @@ def xgboost_model(combined_stock_data):
     y_pred, rmse, mae,r2, true_values= evaluate_model(model, X_test, y_test)
     testing_accuracies = {}
     testing_accuracies['model'] = 'xgboost'    
-    testing_accuracies['true_values'] = true_values
+    testing_accuracies['true_values'] = true_values.to_list()
     xgboost_results = {}
     xgboost_results['model'] = 'xgboost'
     xgboost_results['mae'] = mae
