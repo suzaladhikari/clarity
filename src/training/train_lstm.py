@@ -29,8 +29,8 @@ def lstm_model(train_loader, validation_loader, test_loader):
 
 
     lstm_results = {}
-    lstm_results['true_values'] = (true_values.detach().cpu().tolist() if torch.is_tensor(true_values) else true_values)
-    lstm_results['predicted'] = (predicted.detach().cpu().tolist() if torch.is_tensor(predicted) else predicted)
+    lstm_results['true_values'] = true_values
+    lstm_results['predicted'] = predicted
     lstm_results['mae'] = mae
     lstm_results['rmse'] = rmse
     lstm_results['r2'] = r2
