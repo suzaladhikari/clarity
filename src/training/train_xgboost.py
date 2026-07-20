@@ -52,7 +52,7 @@ def xgboost_model(combined_stock_data):
     y_pred, rmse, mae,r2, true_values= evaluate_model(model, X_test, y_test)
     testing_accuracies = {}
     testing_accuracies['model'] = 'xgboost'    
-    testing_accuracies['true_values'] = true_values.to_list()
+    testing_accuracies['true_values_lstm'] = true_values.to_list()
     xgboost_results = {}
     xgboost_results['model'] = 'xgboost'
     xgboost_results['mae'] = float(mae)
@@ -64,7 +64,7 @@ def xgboost_model(combined_stock_data):
 results,testing_accuracies= xgboost_model(data)
 
 print(results)
-path = "./modelperformance/xgboost_results.json"
+path = "./modelperformance/performancefiles/xgboost_results.json"
 os.makedirs(os.path.dirname(path), exist_ok=True)
 
 with open(path, "w") as f:

@@ -59,7 +59,7 @@ def garch_model(data):
         json.dump(symbol_params, f, indent=4)
     testing_accuracies = {}
     testing_accuracies['model'] = 'garch' 
-    testing_accuracies['true_values'] = all_predictions.tolist()
+    testing_accuracies['true_values_garch'] = all_predictions.tolist()
     garch_results = {}
     garch_results['model'] = 'garch'
     garch_results['mae'] = float(mae)
@@ -70,7 +70,7 @@ def garch_model(data):
 results,testing_accuracies = garch_model(data)
 garch_results = results
 
-path = "./modelperformance/garch_results.json"
+path = "./modelperformance/gperformancefiles/arch_results.json"
 
 os.makedirs(os.path.dirname(path), exist_ok=True)
 

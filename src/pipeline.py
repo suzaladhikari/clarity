@@ -37,11 +37,11 @@ def lstm_rnn(combined_stock_data):
     combined_testing_results = [
         {
             "model": 'lstm',
-            "predicted": lstm_model_results['predicted']
+            "predicted_lstm": lstm_model_results['predicted']
         },
         {
             "model":"rnn",
-            "predicted": rnn_model_results['predicted']
+            "predicted_rnn": rnn_model_results['predicted']
         }
     ]
     combined_results = [
@@ -71,7 +71,7 @@ with open(path, "w") as f:
     json.dump(lstm_rnn_results, f, indent=4)
 
 
-testing_path = "./modelperformance/lstm_rnn_predicted.json"
+testing_path = "./modelperformance/performancefiles/lstm_rnn_predicted.json"
 os.makedirs(os.path.dirname(testing_path), exist_ok=True)
 
 with open(testing_path, "w") as f:
