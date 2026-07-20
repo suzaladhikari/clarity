@@ -81,20 +81,18 @@ st.write(
 """
 )
 
-alex = pd.read_parquet("./datas/combined_data.parquet")
+combined_data = pd.read_parquet("./datas/combined_data.parquet")
 
-simran = alex[alex['date'] >= '2022-01-01']
-st.write(simran['date'].dtype)
+only_test_data = combined_data[combined_data['date'] >= '2022-01-01']
+st.write(only_test_data['date'].dtype)
 fig, ax = plt.subplots(figsize=(12, 5))
 sns.scatterplot(
     x="date",
     y="target_volatility",
-    data=simran,
+    data=only_test_data,
     ax=ax
 )
 
 st.pyplot(fig)
 
-
-data = pd.read_json('./modelperformance/xgboost_predicted.json')
-print(data.head(5))
+print(only_test_data.shape[0])

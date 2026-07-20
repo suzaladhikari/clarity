@@ -9,7 +9,7 @@ subprocess.run([sys.executable, 'src/training/train_xgboost.py'], check=True)
 subprocess.run([sys.executable, 'src/training/train_garch.py'], check=True)
 
 
-json_path = './modelperformance/'
+json_path = './modelperformance/performancefiles/'
 datasets = []
 for filename in os.listdir(json_path):
     if filename.endswith('.json'):
