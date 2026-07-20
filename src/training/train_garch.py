@@ -70,7 +70,7 @@ def garch_model(data):
 results,testing_accuracies = garch_model(data)
 garch_results = results
 
-path = "./modelperformance/gperformancefiles/arch_results.json"
+path = "./modelperformance/performancefiles/garch_results.json"
 
 os.makedirs(os.path.dirname(path), exist_ok=True)
 
