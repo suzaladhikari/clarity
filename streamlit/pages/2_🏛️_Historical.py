@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import ast
 st.title("Analysis of the models")
 st.header("Evaluation One: MAE(Mean Absolute Error), RMSE(Root Mean Squared Error)")
 model_performance_data = pd.read_parquet("./datas/modelpeformance.parquet")
@@ -81,8 +82,52 @@ st.write(
 """
 )
 
-combined_data = pd.read_parquet("./datas/combined_data.parquet")
+### Datas
+lstm_rnn_results = pd.read_json('./modelperformance/lstm_rnn_predicted.json')
+xgboost_results = pd.read_json('./modelperformance/xbgoost_predicted.json')
+garch_results = pd.read_json('./modelperformance/garch_predicted.json')
+combined_data = pd.read_json('./datas/combined_data.parquet') 
+def convert_prediction(x):
+    if isinstance(x, list):
+        return x
+    x = x.strip()
+    if not x.startswith("["):
+        x = "[" + x
+    if not x.endswith("]"):
+        x = x + "]"
+    return ast.literal_eval(x)
 
+# LSTM
+lstm_predictions = convert_prediction(
+    lstm_rnn_results.loc[
+        lstm_rnn_results["model"] == "lstm", "predicted"
+    ].iloc[0]
+)
+
+lstm_results = pd.DataFrame({"lstm_predicted": lstm_predictions})
+
+# RNN
+rnn_predictions = convert_prediction(
+    lstm_rnn_results.loc[
+        lstm_rnn_results["model"] == "rnn", "predicted"
+    ].iloc[0]
+)
+
+rnn_results = pd.DataFrame({"rnn_predicted": rnn_predictions})
+
+# Combine
+combined_results = pd.concat(
+    [
+        combined_data.reset_index(drop=True),
+        xgboost_results.reset_index(drop=True),
+        garch_results.reset_index(drop=True),
+        lstm_results.reset_index(drop=True),
+        rnn_results.reset_index(drop=True),
+    ],
+    axis=1
+)
+
+combined_results.head(5)
 only_test_data = combined_data[combined_data['date'] >= '2022-01-01']
 st.write(only_test_data['date'].dtype)
 fig, ax = plt.subplots(figsize=(12, 5))
@@ -92,7 +137,9 @@ sns.scatterplot(
     data=only_test_data,
     ax=ax
 )
+sns.scatterplot()
 
 st.pyplot(fig)
 
 print(only_test_data.shape[0])
+
