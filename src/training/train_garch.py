@@ -59,7 +59,7 @@ def garch_model(data):
         json.dump(symbol_params, f, indent=4)
     testing_accuracies = {}
     testing_accuracies['model'] = 'garch' 
-    testing_accuracies['true_values'] = all_predictions
+    testing_accuracies['true_values'] = all_predictions.tolist()
     garch_results = {}
     garch_results['model'] = 'garch'
     garch_results['mae'] = mae
