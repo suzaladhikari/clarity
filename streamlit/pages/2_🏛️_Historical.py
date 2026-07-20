@@ -86,7 +86,7 @@ st.write(
 lstm_rnn_results = pd.read_json('./modelperformance/lstm_rnn_predicted.json')
 xgboost_results = pd.read_json('./modelperformance/xbgoost_predicted.json')
 garch_results = pd.read_json('./modelperformance/garch_predicted.json')
-combined_data = pd.read_json('./datas/combined_data.parquet') 
+combined_data = pd.read_parquet('./datas/combined_data.parquet') 
 def convert_prediction(x):
     if isinstance(x, list):
         return x
