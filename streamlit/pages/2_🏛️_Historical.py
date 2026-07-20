@@ -94,3 +94,7 @@ sns.scatterplot(
 )
 
 st.pyplot(fig)
+
+
+data = pd.read_json('./modelperformance/lstm_rnn_predicted.json')
+print(data.shape)
