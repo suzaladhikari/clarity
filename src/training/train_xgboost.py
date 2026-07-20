@@ -55,9 +55,9 @@ def xgboost_model(combined_stock_data):
     testing_accuracies['true_values'] = true_values.to_list()
     xgboost_results = {}
     xgboost_results['model'] = 'xgboost'
-    xgboost_results['mae'] = mae
-    xgboost_results['rmse'] = rmse
-    xgboost_results['r2'] = r2
+    xgboost_results['mae'] = float(mae)
+    xgboost_results['rmse'] = float(rmse)
+    xgboost_results['r2'] = float(r2)
 
     return xgboost_results,testing_accuracies
 

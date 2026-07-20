@@ -62,9 +62,9 @@ def garch_model(data):
     testing_accuracies['true_values'] = all_predictions.tolist()
     garch_results = {}
     garch_results['model'] = 'garch'
-    garch_results['mae'] = mae
-    garch_results['rmse'] = rmse
-    garch_results['r2'] = r2
+    garch_results['mae'] = float(mae)
+    garch_results['rmse'] = float(rmse)
+    garch_results['r2'] = float(r2)
 
     return garch_results, testing_accuracies
 results,testing_accuracies = garch_model(data)

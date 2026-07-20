@@ -96,5 +96,5 @@ sns.scatterplot(
 st.pyplot(fig)
 
 
-data = pd.read_json('./modelperformance/lstm_rnn_predicted.json')
-print(data.shape)
+data = pd.read_json('./modelperformance/xgboost_predicted.json')
+print(data.head(5))
