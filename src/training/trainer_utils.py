@@ -71,8 +71,8 @@ def model_test(model, test_loader, loss_method, device):
             true_values.append(features)
         testing_loss = test_loss/len(test_loader)
         mae, rmse, r2 = deep_evaluation(predicted, true_values)
-        predicted_flat = np.concatenate(predicted).detach().cpu().numpy().flatten().tolist()
-        true_values_flat = np.concatenate(true_values).detach().cpu().numpy().flatten().tolist()
+        predicted_flat = torch.cat(predicted).detach().cpu().numpy().flatten().tolist()
+        true_values_flat = torch.cat(true_values).detach().cpu().numpy().flatten().tolist()
         return testing_loss, true_values_flat, predicted_flat, mae, rmse, r2
     
 
