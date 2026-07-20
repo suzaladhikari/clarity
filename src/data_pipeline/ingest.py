@@ -35,7 +35,9 @@ watchlist = {
 }
 
 def company_datasets(symbol):
-    path = os.path.join("datas", "raw")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(base_dir, "..", "..", "datas", "raw")
+    path = os.path.abspath(path)
     os.makedirs(path,exist_ok=True)
     filepath = os.path.join(path, f"{symbol}.parquet")
     if os.path.exists(filepath):
