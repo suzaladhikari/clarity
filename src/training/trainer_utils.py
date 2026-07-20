@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn 
 from src.utils.metrics import deep_evaluation
 import os 
+import numpy as np 
 
 def model_train_and_validate(model,epoches, train_loader, validation_loader, optimizer, loss_method, device, saving_directory, model_name):
     model.to(device)
@@ -69,6 +70,8 @@ def model_test(model, test_loader, loss_method, device):
             test_loss += loss.item()
             true_values.append(features)
         testing_loss = test_loss/len(test_loader)
+        predicted_flat = np.concatenate(predicted).flatten().tolist()
+        true_values_flat = np.concatenate(true_values).flatten().tolist()
         mae, rmse, r2 = deep_evaluation(predicted, true_values)
         return testing_loss, true_values, predicted, mae, rmse, r2
     
