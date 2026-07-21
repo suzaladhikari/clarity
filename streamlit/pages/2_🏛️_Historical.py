@@ -87,59 +87,92 @@ lstm_rnn_results = pd.read_json('./modelperformance/lstm_rnn_predicted.json')
 xgboost_results = pd.read_json('./modelperformance/xbgoost_predicted.json')
 garch_results = pd.read_json('./modelperformance/garch_predicted.json')
 combined_data = pd.read_parquet('./datas/combined_data.parquet') 
-def convert_prediction(x):
-    if isinstance(x, list):
-        return x
-    x = x.strip()
-    if not x.startswith("["):
-        x = "[" + x
-    if not x.endswith("]"):
-        x = x + "]"
-    return ast.literal_eval(x)
 
-# LSTM
-lstm_predictions = convert_prediction(
-    lstm_rnn_results.loc[
-        lstm_rnn_results["model"] == "lstm", "predicted"
-    ].iloc[0]
+st.divider()
+st.header("Evaluation Three: Actual vs Predicted Volatility")
+
+garch_results = garch_results.drop(columns='model')
+xgboost_results = xgboost_results.drop(columns='model')
+
+combined_data = combined_data[combined_data['date'] >= '2022-01-01']
+# Reset indexes first
+combined_data = combined_data.reset_index(drop=True)
+
+xgboost_results = xgboost_results.reset_index(drop=True)
+
+garch_results = garch_results.reset_index(drop=True)
+
+
+# Assign values
+combined_data["xgboost_predicted"] = (
+    xgboost_results["xgboost_predicted"].values
 )
 
-lstm_results = pd.DataFrame({"lstm_predicted": lstm_predictions})
-
-# RNN
-rnn_predictions = convert_prediction(
-    lstm_rnn_results.loc[
-        lstm_rnn_results["model"] == "rnn", "predicted"
-    ].iloc[0]
+combined_data["garch_predicted"] = (
+    garch_results["garch_predicted"].values
 )
 
-rnn_results = pd.DataFrame({"rnn_predicted": rnn_predictions})
+lstm_results = lstm_rnn_results[lstm_rnn_results['model'] == 'lstm'].drop(columns = 'predicted_rnn')
+rnn_results = lstm_rnn_results[lstm_rnn_results['model'] == 'rnn'].drop(columns = 'predicted_lstm')
 
-# Combine
-combined_results = pd.concat(
-    [
-        combined_data.reset_index(drop=True),
-        xgboost_results.reset_index(drop=True),
-        garch_results.reset_index(drop=True),
-        lstm_results.reset_index(drop=True),
-        rnn_results.reset_index(drop=True),
-    ],
-    axis=1
+
+
+lstm_results["predicted_lstm"] = lstm_results["predicted_lstm"].apply(
+    lambda x: ast.literal_eval(x) if isinstance(x, str) else x
 )
 
-combined_results.head(5)
-only_test_data = combined_data[combined_data['date'] >= '2022-01-01']
-st.write(only_test_data['date'].dtype)
-fig, ax = plt.subplots(figsize=(12, 5))
-sns.scatterplot(
-    x="date",
-    y="target_volatility",
-    data=only_test_data,
-    ax=ax
-)
-sns.scatterplot()
+# Make each prediction its own row
+lstm_results = lstm_results.explode("predicted_lstm", ignore_index=True)
 
+# Convert to float
+lstm_results["predicted_lstm"] = lstm_results["predicted_lstm"].astype(float)
+lstm_results = lstm_results.drop(columns = 'model')
+
+rnn_results["predicted_rnn"] = rnn_results["predicted_rnn"].apply(
+    lambda x: ast.literal_eval(x) if isinstance(x, str) else x
+)
+
+# Make each prediction its own row
+rnn_results = rnn_results.explode("predicted_rnn", ignore_index=True)
+
+# Convert to float
+rnn_results["predicted_rnn"] = rnn_results["predicted_rnn"].astype(float)
+rnn_results = rnn_results.drop(columns = 'model')
+
+
+combined_data['lstm_predicted'] = lstm_results['predicted_lstm']
+combined_data['rnn_predicted'] = rnn_results['predicted_rnn']
+
+plot_data = combined_data.dropna(subset=["target_volatility","xgboost_predicted","garch_predicted","lstm_predicted","rnn_predicted"]).reset_index(drop=True)
+
+fig, ax = plt.subplots(2, 2, figsize=(12, 10))
+
+sns.scatterplot(data=plot_data, x="date", y="target_volatility", ax=ax[0,0], s=10, color="blue", label="Actual")
+sns.scatterplot(data=plot_data, x="date", y="xgboost_predicted", ax=ax[0,0], s=10, color="red", label="XGBoost")
+ax[0,0].set_title("XGBoost vs Actual")
+
+
+sns.scatterplot(data=plot_data, x="date", y="target_volatility", ax=ax[0,1], s=10, color="blue", label="Actual")
+sns.scatterplot(data=plot_data, x="date", y="garch_predicted", ax=ax[0,1], s=10, color="green", label="GARCH")
+ax[0,1].set_title("GARCH vs Actual")
+
+
+sns.scatterplot(data=plot_data, x="date", y="target_volatility", ax=ax[1,0], s=10, color="blue", label="Actual")
+sns.scatterplot(data=plot_data, x="date", y="lstm_predicted", ax=ax[1,0], s=10, color="pink", label="LSTM")
+ax[1,0].set_title("LSTM vs Actual")
+
+
+sns.scatterplot(data=plot_data, x="date", y="target_volatility", ax=ax[1,1], s=10, color="blue", label="Actual")
+sns.scatterplot(data=plot_data, x="date", y="rnn_predicted", ax=ax[1,1], s=10, color="yellow", label="RNN")
+ax[1,1].set_title("RNN vs Actual")
+
+
+for a in ax.flat:
+    a.set_xlabel("Date")
+    a.set_ylabel("Volatility")
+    a.tick_params(axis="x", rotation=45)
+    a.legend()
+    a.grid(True)
+
+plt.tight_layout()
 st.pyplot(fig)
-
-print(only_test_data.shape[0])
-
