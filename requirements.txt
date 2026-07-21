@@ -1,5 +1,4 @@
-fastapi==0.115.6
-uvicorn==0.34.0
+streamlit==1.59.2
 
 pandas==2.2.3
 numpy==1.26.4
@@ -8,14 +7,8 @@ pyarrow==18.1.0
 scikit-learn==1.8.0
 joblib==1.4.2
 
-xgboost==3.2.0
-
---extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.5.1+cpu
-
-arch==7.2.0
 requests
+
+plotly
 matplotlib==3.9.4
 seaborn
-plotly
-streamlit
