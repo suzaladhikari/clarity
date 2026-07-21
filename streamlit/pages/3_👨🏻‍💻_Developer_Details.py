@@ -53,7 +53,7 @@ st.sidebar.markdown(
 )
 
 st.sidebar.markdown(
-    "[LinkedIn](https://www.linkedin.com/in/sujal-adhikari/)",
+    "[LinkedIn](https://www.linkedin.com/in/sujaladhikari3/)",
     unsafe_allow_html=True
 )
 
