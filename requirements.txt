@@ -15,3 +15,4 @@ torch==2.5.1+cpu
 
 arch==7.2.0
 requests
+matplotlib
