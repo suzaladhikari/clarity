@@ -1,0 +1,6 @@
+## Python version 
+FROM python:3.11-slim 
+### Creating the folder
+WORKDIR /fastapi 
+COPY requirements-fastapi.txt /fastapi/requirements.txt
+COPY src/api/main.py /fastapi/
