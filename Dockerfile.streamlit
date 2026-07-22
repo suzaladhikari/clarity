@@ -5,3 +5,8 @@ WORKDIR /streamlit
 
 COPY requirements.txt /streamlit/requirements.txt 
 
+## Copying the home.py that has streamlit to the working directory 
+COPY streamlit/home.py /streamlit
+
+EXPOSE 8501 
+
