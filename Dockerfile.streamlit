@@ -2,3 +2,6 @@
 FROM python:3.11-slim 
 ### Creating the folder
 WORKDIR /streamlit
+
+COPY requirements.txt /streamlit/requirements.txt 
+
