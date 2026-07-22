@@ -5,6 +5,8 @@ WORKDIR /streamlit
 
 COPY requirements.txt /streamlit/requirements.txt 
 
+RUN pip install --no-cache-dir -r requirements.txt
+
 ## Copying the home.py that has streamlit to the working directory 
 COPY streamlit/home.py /streamlit
 
