@@ -1,0 +1,4 @@
+## Python version 
+FROM python:3.11-slim 
+### Creating the folder
+WORKDIR /streamlit
