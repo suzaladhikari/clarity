@@ -1,9 +1,14 @@
-## Python version 
-FROM python:3.11-slim 
-### Creating the folder
-WORKDIR /fastapi 
-COPY requirements-fastapi-docker.txt /fastapi/requirements.txt
+FROM python:3.11-slim
+
+WORKDIR /fastapi
+
+COPY requirements-fastapi-docker.txt requirements.txt
+
 RUN pip install --no-cache-dir -r requirements.txt
-COPY src/api/ .
-EXPOSE 8000 
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+COPY src ./src
+COPY datas ./datas
+
+EXPOSE 8000
+
+CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
