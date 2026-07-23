@@ -2,7 +2,7 @@
 FROM python:3.11-slim 
 ### Creating the folder
 WORKDIR /fastapi 
-COPY requirements-fastapi.txt /fastapi/requirements.txt
+COPY requirements-fastapi-docker.txt /fastapi/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 COPY src/api/ .
 EXPOSE 8000 
