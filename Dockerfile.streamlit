@@ -9,6 +9,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 ## Copying the home.py that has streamlit to the working directory 
 COPY streamlit/ /streamlit
+COPY datas/combined_data.parquet ./datas/
+COPY datas/modelperformance ./datas/modelperformance
+COPY datas/features ./datas/features
 
 EXPOSE 8501 
 

@@ -7,7 +7,7 @@ COPY requirements-fastapi-docker.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src ./src
-COPY datas ./datas
+COPY datas/processed ./datas/processed
 COPY models_saved ./models_saved
 EXPOSE 8000
 
