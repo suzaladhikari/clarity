@@ -17,7 +17,12 @@ services:
     ports:
     - "8501:8501"
     environment:
-      - API_URL='https://clarity-yqh7.onrender.com/'
+      - API_URL: http://fastapi:8000
     depends_on:
       - fastapi
-    
+    networks:
+      - clarity-network
+
+networks:
+  clarity-network:
+    driver: bridge 
