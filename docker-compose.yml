@@ -13,7 +13,7 @@ services:
     build: 
       context: . 
       dockerfile: Dockerfile.streamlit
-    container_name: streamlit-container
+    container_name: streamlitclarity-container
     ports:
     - "8501:8501"
     environment:
