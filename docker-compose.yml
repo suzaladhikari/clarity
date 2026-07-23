@@ -1,5 +1,5 @@
 services:
-  fastapi:  
+  fastapi:  ## Service One: Fastapi through render 
     build:  
       context: .
       dockerfile: Dockerfile.fastapi
@@ -7,6 +7,17 @@ services:
     ports: 
     - "8000:8000"
     networks:
-      - app-network 
+      - clarity-network 
 
-        
+  streamlit: 
+    build: 
+      context: . 
+      dockerfile: Dockerfile.streamlit
+    container_name: streamlit-container
+    ports:
+    - "8501:8501"
+    environment:
+      - API_URL='https://clarity-yqh7.onrender.com/'
+    depends_on:
+      - fastapi
+    

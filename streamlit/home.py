@@ -31,3 +31,8 @@ st.subheader("XGBoost: R² = 0.75 vs. GARCH: R² = 0.55")
 st.divider()
 st.write("To check how the model is trained and tested, please click the button below")
 st.link_button(url ="https://github.com/suzaladhikari/clarity.git", label="GitHub Repo")
+
+import os
+
+API_URL = os.getenv("API_URL")
+print(API_URL)
