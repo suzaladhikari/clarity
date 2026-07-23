@@ -244,3 +244,126 @@ Test Loss 5.9332497193250235e-05, validatiion_loss ->5.7412567160402734e-05, t5.
 [420]	validation_0-rmse:0.00719
 [425]	validation_0-rmse:0.00719
 {'model': 'xgboost', 'mae': 0.0042733538991522515, 'rmse': 0.007288917791901372, 'r2': 0.7512917715481071}
+2026-07-21 00:00:00
+Epoch 1/25, Training Loss 0.0030545689181383957
+Epoch 1/25, Validation Loss 0.00013588848208504107
+Epoch 2/25, Training Loss 0.00035000630879394645
+Epoch 2/25, Validation Loss 8.496261445543496e-05
+Epoch 3/25, Training Loss 0.00014763383541374693
+Epoch 3/25, Validation Loss 8.432813530816929e-05
+Epoch 4/25, Training Loss 9.313498670424516e-05
+Epoch 4/25, Validation Loss 8.276737131988436e-05
+Epoch 5/25, Training Loss 7.875733877685664e-05
+Epoch 5/25, Validation Loss 8.26474480345496e-05
+Epoch 6/25, Training Loss 7.270848068870414e-05
+Epoch 6/25, Validation Loss 6.782765976822702e-05
+Epoch 7/25, Training Loss 7.07185194016037e-05
+Epoch 7/25, Validation Loss 7.910921974447167e-05
+Epoch 8/25, Training Loss 6.846801446987114e-05
+Epoch 8/25, Validation Loss 5.5135693134313136e-05
+Epoch 9/25, Training Loss 6.709512681359656e-05
+Epoch 9/25, Validation Loss 6.289957929160058e-05
+Epoch 10/25, Training Loss 6.578357486824183e-05
+Epoch 10/25, Validation Loss 6.25402888423802e-05
+Epoch 11/25, Training Loss 6.4464642516128e-05
+Epoch 11/25, Validation Loss 5.556594122026581e-05
+Epoch 12/25, Training Loss 6.408229181629129e-05
+Epoch 12/25, Validation Loss 5.7001711393240836e-05
+Epoch 13/25, Training Loss 6.346287471942437e-05
+Epoch 13/25, Validation Loss 6.112291009533995e-05
+Epoch 14/25, Training Loss 6.317612334872223e-05
+Epoch 14/25, Validation Loss 6.443010241734252e-05
+Epoch 15/25, Training Loss 6.151372380955996e-05
+Epoch 15/25, Validation Loss 6.09038819069004e-05
+Epoch 16/25, Training Loss 5.9767201361412156e-05
+Epoch 16/25, Validation Loss 7.258882388972172e-05
+Epoch 17/25, Training Loss 5.974083553416672e-05
+Epoch 17/25, Validation Loss 5.1669945545048295e-05
+Epoch 18/25, Training Loss 5.914204669478762e-05
+Epoch 18/25, Validation Loss 6.339406805636826e-05
+Epoch 19/25, Training Loss 5.777301165806975e-05
+Epoch 19/25, Validation Loss 7.108259817565947e-05
+Epoch 20/25, Training Loss 5.714118696938189e-05
+Epoch 20/25, Validation Loss 6.251228588250039e-05
+Epoch 21/25, Training Loss 5.6565106862738586e-05
+Epoch 21/25, Validation Loss 6.31167725926692e-05
+Epoch 22/25, Training Loss 5.656735090428709e-05
+Epoch 22/25, Validation Loss 5.836602527172848e-05
+Epoch 23/25, Training Loss 5.564111329007851e-05
+Epoch 23/25, Validation Loss 6.836940163339022e-05
+Epoch 24/25, Training Loss 5.497374734296406e-05
+Epoch 24/25, Validation Loss 5.87076933516073e-05
+Epoch 25/25, Training Loss 5.51100731800564e-05
+Epoch 25/25, Validation Loss 5.9417038780035603e-05
+Is it running
+Test Loss 6.113072533909203e-05, validatiion_loss ->5.9417038780035603e-05, t5.51100731800564e-05, MAE:0.004709114320576191, RMSE:0.007829158566892147, r2:0.7073004245758057
+Epoch 1/25, Training Loss 0.0009589171970684411
+Epoch 1/25, Validation Loss 0.00010548998332524207
+Epoch 2/25, Training Loss 0.0001340679163039498
+Epoch 2/25, Validation Loss 0.00010312006386811845
+Epoch 3/25, Training Loss 9.184107159449971e-05
+Epoch 3/25, Validation Loss 0.00010267997822666075
+Epoch 4/25, Training Loss 8.277517790783974e-05
+Epoch 4/25, Validation Loss 7.660590514812308e-05
+Epoch 5/25, Training Loss 7.874242162813261e-05
+Epoch 5/25, Validation Loss 7.713566489352767e-05
+Epoch 6/25, Training Loss 7.356548588181326e-05
+Epoch 6/25, Validation Loss 7.794250753552963e-05
+Epoch 7/25, Training Loss 7.394096718040282e-05
+Epoch 7/25, Validation Loss 9.870806647086284e-05
+Epoch 8/25, Training Loss 6.959270693578668e-05
+Epoch 8/25, Validation Loss 6.230723648817123e-05
+Epoch 9/25, Training Loss 6.847551920822657e-05
+Epoch 9/25, Validation Loss 9.07653621955736e-05
+Epoch 10/25, Training Loss 6.735464124873775e-05
+Epoch 10/25, Validation Loss 7.995103117233763e-05
+Epoch 11/25, Training Loss 6.659508701401471e-05
+Epoch 11/25, Validation Loss 8.299260938656517e-05
+Epoch 12/25, Training Loss 6.420500195079333e-05
+Epoch 12/25, Validation Loss 5.921904327503095e-05
+Epoch 13/25, Training Loss 6.386874861469844e-05
+Epoch 13/25, Validation Loss 6.083193102919419e-05
+Epoch 14/25, Training Loss 6.113242453861838e-05
+Epoch 14/25, Validation Loss 6.267063193566476e-05
+Epoch 15/25, Training Loss 6.195870124192797e-05
+Epoch 15/25, Validation Loss 6.293807281811799e-05
+Epoch 16/25, Training Loss 5.961205585618402e-05
+Epoch 16/25, Validation Loss 5.798930385935819e-05
+Epoch 17/25, Training Loss 5.958522300544845e-05
+Epoch 17/25, Validation Loss 6.281290273060828e-05
+Epoch 18/25, Training Loss 5.979234215639262e-05
+Epoch 18/25, Validation Loss 6.576830361154862e-05
+Epoch 19/25, Training Loss 5.911442416610072e-05
+Epoch 19/25, Validation Loss 5.8246824410161934e-05
+Epoch 20/25, Training Loss 5.7729518393817045e-05
+Epoch 20/25, Validation Loss 6.010940704679039e-05
+Epoch 21/25, Training Loss 5.8076942735214584e-05
+Epoch 21/25, Validation Loss 5.42445541335231e-05
+Epoch 22/25, Training Loss 5.763127018379506e-05
+Epoch 22/25, Validation Loss 5.598547530098585e-05
+Epoch 23/25, Training Loss 5.706093943363443e-05
+Epoch 23/25, Validation Loss 5.027084784766582e-05
+Epoch 24/25, Training Loss 5.6302450294697746e-05
+Epoch 24/25, Validation Loss 7.358129506125502e-05
+Epoch 25/25, Training Loss 5.64942249649185e-05
+Epoch 25/25, Validation Loss 5.7412567160402734e-05
+Is it running
+Test Loss 5.937217157360852e-05, validatiion_loss ->5.7412567160402734e-05, t5.64942249649185e-05, MAE:0.0046345628798007965, RMSE:0.007715958636254072, r2:0.7157033681869507
+2026-07-21 00:00:00 90587
+[0]	validation_0-rmse:0.01711
+[30]	validation_0-rmse:0.01376
+[60]	validation_0-rmse:0.01150
+[90]	validation_0-rmse:0.00995
+[120]	validation_0-rmse:0.00891
+[150]	validation_0-rmse:0.00821
+[180]	validation_0-rmse:0.00779
+[210]	validation_0-rmse:0.00754
+[240]	validation_0-rmse:0.00736
+[270]	validation_0-rmse:0.00724
+[300]	validation_0-rmse:0.00721
+[330]	validation_0-rmse:0.00721
+[360]	validation_0-rmse:0.00719
+[390]	validation_0-rmse:0.00719
+[420]	validation_0-rmse:0.00719
+[425]	validation_0-rmse:0.00719
+{'model': 'xgboost', 'mae': 0.004272032733655568, 'rmse': 0.007286518072794452, 'r2': 0.7514443450070971}
