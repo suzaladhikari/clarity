@@ -201,5 +201,6 @@ clarity/
 ---
 
 ## Contact
-
-`[Sujal Adhikari] — [sujaladhikarids@gmail.com or https://www.linkedin.com/in/sujaladhikari3/] — [https://github.com/suzaladhikari]`
+ 
+**Sujal Adhikari**
+[Email](mailto:sujaladhikarids@gmail.com) · [LinkedIn](https://www.linkedin.com/in/sujaladhikari3/) · [GitHub](https://github.com/suzaladhikari)
