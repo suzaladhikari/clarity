@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY streamlit .
 
 COPY datas/combined_data.parquet ./datas/
-COPY datas/modelperformance.parquet ./datas/
+COPY datas/modelpeformance.parquet ./datas/
 
 EXPOSE 8502
 
