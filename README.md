@@ -1,106 +1,205 @@
-# 📈 Clarity: A weather forecast for market turbulence
+# Clarity
 
-## What is Clarity ?
+Stock volatility forecasting platform comparing classical statistical modeling against machine learning, served through a FastAPI backend and a Streamlit frontend.
 
-Stock volatility forecasting platform combining classical statistical models with machine learning, served through a FastAPI backend and a Streamlit frontend.
-
----
-## Project Overview 
-
-Clarity is an end-to-end platform for stock volatility forecasting, built to compare classical and machine-learning approaches under one roof. It runs four models in parallel — XGBoost, LSTM, RNN, and GARCH — refreshed daily through an automated data pipeline. The system is fully deployed: a Dockerized FastAPI backend on Render, and a Streamlit frontend for interactive exploration of predictions and model performance.
-
-## 🌐 Live Demo
-
-👉 **[Try the app here](https://claritystockvolatiltypredictor.streamlit.app/)**
-
-The application is live and hosted on Streamlit Cloud. No installation required — just open the link and start predicting!
+**Live app:** [claritystockvolatiltypredictor.streamlit.app](https://claritystockvolatiltypredictor.streamlit.app/)
+**API docs:** `https://clarity-yqh7.onrender.com/docs`
+**Source:** [github.com/suzaladhikari/clarity](https://github.com/suzaladhikari/clarity)
 
 ---
 
-## Project Structure 
+## Project Overview
+
+Clarity forecasts short-term stock volatility across 20 large-cap stocks, benchmarking a classical econometric model (GARCH(1,1)) against three machine learning approaches (XGBoost, LSTM, RNN). The goal is to test whether ML models can meaningfully outperform a well-established statistical baseline on volatility prediction, and to expose that comparison through a live, interactive tool rather than a static notebook.
+
+The system is fully productionized: a daily automated pipeline ingests and processes market data, four models generate predictions, a FastAPI service exposes them over REST, and a Streamlit app renders live forecasts and model comparisons.
+
+---
+
+## Model Performance
+
+| Model   | R² Score |
+|---------|----------|
+| XGBoost | 0.750    |
+| RNN     | 0.715    |
+| LSTM    | 0.707    |
+| GARCH   | 0.554    |
+
+
+GARCH(1,1) serves as the classical baseline; all three ML models outperform it on this dataset, with XGBoost currently leading.
+
+**Coverage:** AAPL, MSFT, GOOGL, NVDA, TSLA, META, AMD, AVGO, MU, ORCL, QCOM, JPM, MA, HD, WMT, PG, JNJ, LLY, UNH, NFLX, plus SPY as a market benchmark.
+
+---
+
+## Key Features
+
+- **Multi-model comparison** — XGBoost, LSTM, RNN, and GARCH(1,1) predictions generated side by side for the same tickers
+- **Automated data pipeline** — daily ingestion, cleaning, and feature engineering, including sentiment-based features, with no manual retraining step
+- **FastAPI backend** — REST endpoints for predictions and model performance, with auto-generated Swagger docs
+- **Streamlit frontend** — multi-page app with a predictor view, a model analysis/comparison view, and a project details page
+- **Dockerized deployment** — separate Dockerfiles for backend and frontend, orchestrated via Docker Compose for local development
+- **Cloud deployment** — backend on Render, frontend on Streamlit Community Cloud
+
+---
+
+## Prerequisites
+
+- [Python 3.12+](https://www.python.org/downloads/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Git](https://git-scm.com/)
+
+---
+
+## Running with Docker (Recommended)
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/suzaladhikari/clarity.git
+cd clarity
+```
+
+**2. Build and start all containers**
+
+```bash
+docker compose up --build
+```
+
+**3. Access the application**
+
+| Service       | URL                          |
+|---------------|-------------------------------|
+| Streamlit App | http://localhost:8501         |
+| FastAPI Docs  | http://localhost:8000/docs    |
+
+**4. Stop all containers**
+
+```bash
+docker compose down
+```
+
+---
+
+## Running Locally (Without Docker)
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/suzaladhikari/clarity.git
+cd clarity
+```
+
+**2. Install backend dependencies**
+
+```bash
+pip install -r requirements-fastapi.txt
+```
+
+**3. Install frontend dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+**4. Start the FastAPI backend**
+
+```bash
+uvicorn src.api.main:app --reload
+```
+
+**5. Start the Streamlit frontend** (in a new terminal)
+
+```bash
+streamlit run streamlit/home.py
+```
+
+**6. Access the application**
+
+| Service       | URL                          |
+|---------------|-------------------------------|
+| Streamlit App | http://localhost:8501         |
+| FastAPI Docs  | http://localhost:8000/docs    |
+
+---
+
+## How the System Works
+
+```
+Daily cron trigger
+       |
+Data ingestion (src/data_pipeline/ingest.py)
+       |
+Cleaning + feature engineering (cleaner.py, featureengineering.py, sentimentanalysis.py)
+       |
+Model inference: XGBoost | LSTM | RNN | GARCH(1,1)
+       |
+FastAPI backend serves predictions (src/api)
+       |
+Streamlit frontend queries API and renders forecasts
+```
+
+1. A scheduled job pulls fresh market data for all 20 tickers
+2. Data is cleaned, engineered into features, and enriched with sentiment signals
+3. All four models generate updated volatility forecasts
+4. Results are served via FastAPI endpoints
+5. The Streamlit app queries the API and displays predictions and model comparisons
+
+---
+
+## Project Structure
 
 ```
 clarity/
-│
-├── streamlit/                        # Streamlit Frontend
-│   ├── home.py                       # Main landing page
+├── streamlit/                        # Streamlit frontend
+│   ├── home.py
 │   └── pages/
-│       ├── 1_Predictor.py            # Volatility prediction interface
-│       ├── 2_Analysis_of_Models.py   # Model comparison and evaluation views
-│       └── 3_Developer_Details.py    # Project/developer info page
+│       ├── 1_Predictor.py
+│       ├── 2_Analysis_of_Models.py
+│       └── 3_Developer_Details.py
 │
-├── src/                              # Core application code
-│   ├── api/                          # FastAPI Backend
-│   │   ├── main.py                   # API entry point
-│   │   ├── routes.py                 # Prediction endpoints
-│   │   ├── predictivemodels.py       # Model loading and inference logic
-│   │   └── schemas.py                # Request/response schemas (Pydantic)
-│   │
-│   ├── data_pipeline/                # Data ingestion and preprocessing
-│   │   ├── ingest.py                 # Raw data collection
-│   │   ├── cleaner.py                # Data cleaning
-│   │   ├── featureengineering.py     # Feature construction
-│   │   └── sentimentanalysis.py      # Sentiment feature extraction
-│   │
-│   ├── datasets/                     # Dataset preparation utilities
-│   │   ├── dataset_loader.py         # Loads processed datasets
-│   │   └── sequence_builder.py       # Builds sequences for LSTM/RNN input
-│   │
+├── src/
+│   ├── api/                          # FastAPI backend
+│   │   ├── main.py
+│   │   ├── routes.py
+│   │   ├── predictivemodels.py
+│   │   └── schemas.py
+│   ├── data_pipeline/                # Ingestion, cleaning, feature engineering
+│   ├── datasets/                     # Dataset + sequence loaders for LSTM/RNN
 │   ├── models/                       # Model architectures
-│   │   ├── garch.py                  # GARCH(1,1) implementation
-│   │   ├── lstm.py                   # LSTM model
-│   │   ├── rnn.py                    # RNN model
-│   │   └── xgboost.py                # XGBoost model
-│   │
-│   ├── training/                     # Model training scripts
-│   │   ├── train_garch.py
-│   │   ├── train_lstm.py
-│   │   ├── train_rnn.py
-│   │   ├── train_xgboost.py
-│   │   └── trainer_utils.py          # Shared training utilities
-│   │
-│   ├── utils/                        # Shared helpers
-│   │   ├── initials.py
-│   │   ├── metrics.py                # R², RMSE, MAE, etc.
-│   │   └── seed.py                   # Reproducibility (random seed control)
-│   │
-│   ├── pipeline.py                   # End-to-end pipeline orchestration
-│   └── runall.py                     # Entry point to run the full pipeline
+│   ├── training/                     # Training scripts per model
+│   ├── utils/                        # Metrics, seeding, shared helpers
+│   ├── pipeline.py
+│   └── runall.py
 │
-├── datas/                            # Data files
-│   ├── raw/                          # Raw per-ticker data (20 stocks)
-│   ├── processed/                    # Cleaned, processed data
-│   ├── features/                     # Feature-engineered data
-│   ├── combined_data.parquet         # Combined dataset across tickers
-│   └── modelpeformance.parquet       # Aggregated model performance
-│
+├── datas/                            # Raw, processed, and feature data
 ├── models_saved/                     # Trained model artifacts
-│   ├── lstm/lstm_best.pt
-│   ├── rnn/rnn_best.pt
-│   ├── xgboost/xgboost_model.json
-│   └── scaler.pkl                    # Fitted feature scaler
-│
-├── modelperformance/                 # Evaluation outputs
-│   ├── garch_params.json
-│   ├── garch_predicted.json
-│   ├── lstm_rnn_predicted.json
-│   ├── xbgoost_predicted.json
-│   ├── performancefiles/             # Per-model results (JSON)
-│   ├── gperformancefiles/            # ARCH model results
-│   ├── r2scores.png                  # R² comparison chart
-│   └── maeandrmsescores.png          # MAE/RMSE comparison chart
-│
+├── modelperformance/                 # Evaluation results and charts
 ├── logs/
-│   └── runall.log                    # Pipeline execution logs
 │
-├── Dockerfile.fastapi                # Dockerfile for FastAPI backend
-├── Dockerfile.streamlit              # Dockerfile for Streamlit frontend
-├── docker-compose.yml                # Multi-container orchestration
-├── environment.yml                   # Conda environment spec
-├── requirements.txt                  # Base dependencies
-├── requirements-fastapi.txt          # Backend dependencies (local)
-├── requirements-fastapi-docker.txt   # Backend dependencies (Docker)
+├── Dockerfile.fastapi
+├── Dockerfile.streamlit
+├── docker-compose.yml
+├── environment.yml
+├── requirements.txt
+├── requirements-fastapi.txt
+├── requirements-fastapi-docker.txt
 └── README.md
 ```
 
 ---
+
+## Project Goals
+
+- Rigorously compare classical (GARCH) and machine learning (XGBoost, LSTM, RNN) approaches to volatility forecasting on identical data
+- Build a complete MLOps pipeline: automated ingestion, training, evaluation, and serving
+- Containerize and deploy the full stack for public, real-time access
+- Apply the same reproducibility discipline (fixed seeds, tracked metrics) used in research to a deployed product
+
+---
+
+---
+
+## Contact
+
+`[Sujal Adhikari] — [sujaladhikarids@gmail.com or https://www.linkedin.com/in/sujaladhikari3/] — [https://github.com/suzaladhikari]`
