@@ -1,4 +1,9 @@
 # 📈 Clarity: A weather forecast for market turbulence
 
 ## What is Clarity ?
-## Clarity does not try to predict where the market goes tomorow. What it predicts is how much is the stock likely to swing, in either direction. That's volatility and unlike the price detection it's actually forecastable.
+Stock volatility forecasting platform combining classical statistical models with machine learning, served through a FastAPI backend and a Streamlit frontend.
+
+---
+### Project Overview 
+
+Clarity is an end-to-end platform for stock volatility forecasting, built to compare classical and machine-learning approaches under one roof. It runs four models in parallel — XGBoost, LSTM, RNN, and GARCH — refreshed daily through an automated data pipeline. The system is fully deployed: a Dockerized FastAPI backend on Render, and a Streamlit frontend for interactive exploration of predictions and model performance.
